@@ -11,7 +11,7 @@ import javax.swing.JTextArea;
 import javax.swing.border.LineBorder;
 import javax.swing.JButton;
 
-public class AvaliarFreelancer {
+public class Solicitacao {
 
 	private JFrame frame;
 
@@ -22,7 +22,7 @@ public class AvaliarFreelancer {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					AvaliarFreelancer window = new AvaliarFreelancer();
+					Solicitacao window = new Solicitacao();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -34,7 +34,7 @@ public class AvaliarFreelancer {
 	/**
 	 * Create the application.
 	 */
-	public AvaliarFreelancer() {
+	public Solicitacao() {
 		initialize();
 	}
 
@@ -42,23 +42,17 @@ public class AvaliarFreelancer {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		String nome_freelancer = "Ricardo Viadao";
-		frame = new JFrame("Avaliar Freelancer");
+		frame = new JFrame("Solicitações");
 		frame.getContentPane().setBackground(Color.WHITE);
 		frame.getContentPane().setLayout(null);
 		
-		JLabel lblAval = new JLabel("Funcionário: "+ nome_freelancer);
-		lblAval.setFont(new Font("Arial Black", Font.PLAIN, 16));
-		lblAval.setBounds(41, 11, 383, 36);
-		frame.getContentPane().add(lblAval);
-		
-		JLabel lblNota = new JLabel("Nota:");
-		lblNota.setFont(new Font("Arial Black", Font.PLAIN, 16));
-		lblNota.setBounds(41, 59, 105, 36);
-		frame.getContentPane().add(lblNota);
+		JLabel lblTipo = new JLabel("Tipo de Solicitação:");
+		lblTipo.setFont(new Font("Arial Black", Font.PLAIN, 16));
+		lblTipo.setBounds(10, 11, 414, 36);
+		frame.getContentPane().add(lblTipo);
 		
 		JComboBox comboBox = new JComboBox();
-		comboBox.setBounds(104, 70, 66, 20);
+		comboBox.setBounds(10, 70, 414, 20);
 		frame.getContentPane().add(comboBox);
 		
 		JLabel lblComentrio = new JLabel("Comentário:");
@@ -73,14 +67,14 @@ public class AvaliarFreelancer {
 		
 		JButton button = new JButton("Enviar");
 		button.setFont(new Font("Arial Black", Font.PLAIN, 11));
-		button.setBounds(227, 256, 89, 23);
+		button.setBounds(212, 241, 89, 23);
 		frame.getContentPane().add(button);
 		
 		JButton button_1 = new JButton("Cancelar");
 		button_1.setFont(new Font("Arial Black", Font.PLAIN, 11));
-		button_1.setBounds(335, 256, 89, 23);
+		button_1.setBounds(320, 241, 89, 23);
 		frame.getContentPane().add(button_1);
-		frame.setBounds(100, 100, 450, 346);
+		frame.setBounds(100, 100, 450, 330);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 }

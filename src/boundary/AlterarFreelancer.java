@@ -29,7 +29,7 @@ import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JPanel;
 
-public class CadastroFreelancer implements ActionListener{
+public class AlterarFreelancer implements ActionListener{
 
 	private JFrame frame;
 	private JTextField txtNome;
@@ -70,7 +70,7 @@ public class CadastroFreelancer implements ActionListener{
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					CadastroFreelancer window = new CadastroFreelancer();
+					AlterarFreelancer window = new AlterarFreelancer();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -82,7 +82,7 @@ public class CadastroFreelancer implements ActionListener{
 	/**
 	 * Create the application.
 	 */
-	public CadastroFreelancer() {
+	public AlterarFreelancer() {
 		initialize();
 	}
 
@@ -149,13 +149,13 @@ public class CadastroFreelancer implements ActionListener{
 		
 		
 		
-		JButton btnCadastrar = new JButton("Cadastrar-se");
-		btnCadastrar.setForeground(new Color(255, 255, 255));
-		btnCadastrar.setFont(new Font("Arial Black", Font.PLAIN, 16));
-		btnCadastrar.setBackground(new Color(0, 0, 255));
-		btnCadastrar.setBounds(398, 528, 183, 36);
-		btnCadastrar.addActionListener(this);
-		frame.getContentPane().add(btnCadastrar);
+		JButton btnAlterar = new JButton("Alterar");
+		btnAlterar.setForeground(new Color(255, 255, 255));
+		btnAlterar.setFont(new Font("Arial Black", Font.PLAIN, 16));
+		btnAlterar.setBackground(new Color(0, 0, 255));
+		btnAlterar.setBounds(398, 528, 183, 36);
+		btnAlterar.addActionListener(this);
+		frame.getContentPane().add(btnAlterar);
 		
 		JLabel lblConfirmarSenha = new JLabel("Email:");
 		lblConfirmarSenha.setFont(new Font("Arial Black", Font.PLAIN, 18));

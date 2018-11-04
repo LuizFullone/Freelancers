@@ -9,11 +9,13 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.Color;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.awt.event.ActionEvent;
 import java.awt.SystemColor;
 import javax.swing.SwingConstants;
 
-public class Login {
+public class Login implements ActionListener{
 
 	private JFrame frame;
 	private JTextField txtUser;
@@ -70,11 +72,28 @@ public class Login {
 		btnLogin.setFont(new Font("Arial Black", Font.PLAIN, 16));
 		btnLogin.setBackground(new Color(0, 0, 255));
 		btnLogin.setBounds(290, 201, 104, 36);
+		btnLogin.addActionListener(this);
 		frame.getContentPane().add(btnLogin);
 		
-		JLabel lblCriarConta = new JLabel("Ainda n\u00E3o possui conta ? Clique aqui para cadastra-se");
-		lblCriarConta.setHorizontalAlignment(SwingConstants.TRAILING);
-		lblCriarConta.setBounds(83, 163, 299, 14);
-		frame.getContentPane().add(lblCriarConta);
+		JButton btnAindaNoPossui = new JButton("Ainda não possui conta ? Clique aqui para cadastra-se");
+		
+		btnAindaNoPossui.setFont(new Font("Arial", Font.PLAIN, 11));
+		btnAindaNoPossui.setBackground(Color.WHITE);
+		btnAindaNoPossui.setBounds(43, 160, 354, 23);
+		btnAindaNoPossui.setBorder(null);
+		btnAindaNoPossui.addActionListener(this);
+		frame.getContentPane().add(btnAindaNoPossui);
+	}
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if ("Ainda não possui conta ? Clique aqui para cadastra-se".equals(e.getActionCommand())) { 
+			CadastroLogin cadLogin = new CadastroLogin();
+			cadLogin.main();
+			frame.setVisible(false);
+		} else if ("Login".equals(e.getActionCommand())) {
+			Dashboard dash = new Dashboard();
+			dash.main();
+			frame.setVisible(false);
+		}
 	}
 }

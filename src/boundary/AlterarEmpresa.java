@@ -22,7 +22,7 @@ import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 import javax.swing.JTextArea;
 
-public class CadastroEmpresa implements ActionListener{
+public class AlterarEmpresa implements ActionListener{
 
 	private JFrame frame;
 	private JTextField txtNome;
@@ -47,7 +47,7 @@ public class CadastroEmpresa implements ActionListener{
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					CadastroEmpresa window = new CadastroEmpresa();
+					AlterarEmpresa window = new AlterarEmpresa();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -59,7 +59,7 @@ public class CadastroEmpresa implements ActionListener{
 	/**
 	 * Create the application.
 	 */
-	public CadastroEmpresa() {
+	public AlterarEmpresa() {
 		initialize();
 	}
 
@@ -234,13 +234,13 @@ public class CadastroEmpresa implements ActionListener{
 		textArea_3.setBounds(35, 357, 319, 129);
 		panel.add(textArea_3);
 		
-		JButton btnCadastrar = new JButton("Cadastrar-se");
-		btnCadastrar.setForeground(new Color(0, 0, 0));
-		btnCadastrar.setFont(new Font("Arial Black", Font.PLAIN, 16));
-		btnCadastrar.setBackground(new Color(204, 255, 204));
-		btnCadastrar.setBounds(438, 554, 183, 36);
-		btnCadastrar.addActionListener(this);
-		frame.getContentPane().add(btnCadastrar);
+		JButton btnAlterar = new JButton("Alterar");
+		btnAlterar.setForeground(new Color(0, 0, 0));
+		btnAlterar.setFont(new Font("Arial Black", Font.PLAIN, 16));
+		btnAlterar.setBackground(new Color(204, 255, 204));
+		btnAlterar.setBounds(438, 554, 183, 36);
+		btnAlterar.addActionListener(this);
+		frame.getContentPane().add(btnAlterar);
 		
 		JButton btnCancelar = new JButton("Cancelar");
 		btnCancelar.setForeground(new Color(0, 0, 0));

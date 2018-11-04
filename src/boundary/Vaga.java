@@ -58,7 +58,7 @@ public class Vaga {
     String [] colunasDesejavel = {"Requisitos básicos"}; 
     //Fim da tabela
     
-	public static void main(String args[]) {
+	public void main() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {

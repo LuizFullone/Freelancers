@@ -17,14 +17,15 @@ import javax.swing.JMenu;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 
-public class Dashboard {
+public class Dashboard implements ActionListener{
 
 	private JFrame frame;
+	String TestBotao = "free";
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	public void main() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -41,7 +42,6 @@ public class Dashboard {
 	 * Create the application.
 	 */
 	public Dashboard() {
-		String TestBotao = "free";
 		
 		frame = new JFrame("Login");
 		frame.getContentPane().setBackground(new Color(255, 255, 255));
@@ -56,12 +56,13 @@ public class Dashboard {
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 		
-		JButton btnFinalizarServio = new JButton("Finalizar Servi\u00E7o");
+		JButton btnFinalizarServio = new JButton("Finalizar Serviço");
 		btnFinalizarServio.setFont(new Font("Arial Black", Font.PLAIN, 16));
 		btnFinalizarServio.setFocusable(false);
 		btnFinalizarServio.setBorder(null);
 		btnFinalizarServio.setBackground(Color.WHITE);
 		btnFinalizarServio.setBounds(35, 116, 147, 23);
+		btnFinalizarServio.addActionListener(this);
 		panel.add(btnFinalizarServio);
 		
 		JButton btnSolicitar = new JButton("Solicitar");
@@ -70,6 +71,7 @@ public class Dashboard {
 		btnSolicitar.setBorder(null);
 		btnSolicitar.setBackground(Color.WHITE);
 		btnSolicitar.setBounds(35, 175, 147, 23);
+		btnSolicitar.addActionListener(this);
 		panel.add(btnSolicitar);
 		
 		if("empresa".equals(TestBotao)) {
@@ -79,15 +81,18 @@ public class Dashboard {
 			btnBuscarFreelancer.setBorder(null);
 			btnBuscarFreelancer.setBackground(Color.WHITE);
 			btnBuscarFreelancer.setBounds(20, 11, 172, 23);
+			btnBuscarFreelancer.addActionListener(this);
 			panel.add(btnBuscarFreelancer);
 		}else {
-			JButton button = new JButton("Visualizar Vagas");
-			button.setBounds(35, 11, 147, 23);
-			button.setFont(new Font("Arial Black", Font.PLAIN, 16));
-			button.setFocusable(false);
-			button.setBorder(null);
-			button.setBackground(Color.WHITE);
-			panel.add(button);
+			JButton btnVisualizarVagas = new JButton("Visualizar Vagas");
+			btnVisualizarVagas.setBounds(35, 11, 147, 23);
+			btnVisualizarVagas.setFont(new Font("Arial Black", Font.PLAIN, 16));
+			btnVisualizarVagas.setFocusable(false);
+			btnVisualizarVagas.setBorder(null);
+			btnVisualizarVagas.setBackground(Color.WHITE);
+			btnVisualizarVagas.addActionListener(this);
+			
+			panel.add(btnVisualizarVagas);
 		}
 		JButton btnVisualizarVagas = new JButton("Alterar Perfil");
 		btnVisualizarVagas.setBounds(35, 57, 147, 23);
@@ -95,6 +100,7 @@ public class Dashboard {
 		btnVisualizarVagas.setFont(new Font("Arial Black", Font.PLAIN, 16));
 		btnVisualizarVagas.setBackground(new Color(255, 255, 255));
 		btnVisualizarVagas.setFocusable(false);
+		btnVisualizarVagas.addActionListener(this);
 		btnVisualizarVagas.setBorder(null);
 		
 		JLabel lblDashboard = new JLabel("DashBoard");
@@ -102,9 +108,40 @@ public class Dashboard {
 		lblDashboard.setBounds(227, 11, 147, 38);
 		frame.getContentPane().add(lblDashboard);
 		
-		JLabel lblNotificaes = new JLabel("Notifica\u00E7\u00F5es:");
+		JLabel lblNotificaes = new JLabel("Notificações:");
 		lblNotificaes.setFont(new Font("Arial Black", Font.PLAIN, 16));
 		lblNotificaes.setBounds(305, 86, 193, 44);
 		frame.getContentPane().add(lblNotificaes);
+	}
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if (("Finalizar Serviço".equals(e.getActionCommand()))&&("empresa".equals(TestBotao))) { 
+			AvaliarFreelancer avaliar = new AvaliarFreelancer();
+			avaliar.main();
+			frame.setVisible(false);
+		} else if (("Finalizar Serviço".equals(e.getActionCommand()))&&("free".equals(TestBotao))) {
+			AvaliarEmpresa avaliar = new AvaliarEmpresa();
+			avaliar.main();
+			frame.setVisible(false);
+		}else if ("Solicitar".equals(e.getActionCommand())) {
+			Solicitacao solicitacao = new Solicitacao();
+			solicitacao.main();
+			frame.setVisible(false);
+		}else if (("Alterar Perfil".equals(e.getActionCommand()))&&("empresa".equals(TestBotao))) {
+			AlterarEmpresa alterar = new AlterarEmpresa();
+			alterar.main();
+			frame.setVisible(false);
+		}else if (("Alterar Perfil".equals(e.getActionCommand()))&&("free".equals(TestBotao))) {
+			AlterarFreelancer alterar = new AlterarFreelancer();
+			alterar.main();
+			frame.setVisible(false);
+		}
+		else if ("Visualizar Vagas".equals(e.getActionCommand())) {
+			Vaga vagas = new Vaga();
+			vagas.main();
+			frame.setVisible(false);
+		}else if ("Buscar Freelancer".equals(e.getActionCommand())) {
+			//implementar
+		}
 	}
 }

@@ -9,6 +9,7 @@ import java.awt.Font;
 import javax.swing.JComboBox;
 import javax.swing.JTextArea;
 import javax.swing.border.LineBorder;
+import javax.swing.JButton;
 
 public class AvaliarEmpresa {
 
@@ -17,7 +18,7 @@ public class AvaliarEmpresa {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	public void main() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -69,7 +70,17 @@ public class AvaliarEmpresa {
 		textArea.setBounds(25, 137, 399, 81);
 		textArea.setBorder(new LineBorder(null));
 		frame.getContentPane().add(textArea);
-		frame.setBounds(100, 100, 450, 300);
+		
+		JButton btnEnviar = new JButton("Enviar");
+		btnEnviar.setFont(new Font("Arial Black", Font.PLAIN, 11));
+		btnEnviar.setBounds(227, 255, 89, 23);
+		frame.getContentPane().add(btnEnviar);
+		
+		JButton btnCancelar = new JButton("Cancelar");
+		btnCancelar.setFont(new Font("Arial Black", Font.PLAIN, 11));
+		btnCancelar.setBounds(335, 255, 89, 23);
+		frame.getContentPane().add(btnCancelar);
+		frame.setBounds(100, 100, 450, 347);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 }
