@@ -29,7 +29,7 @@ import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JPanel;
 
-public class AlterarFreelancer implements ActionListener{
+public class FiltrarFreelancer implements ActionListener{
 
 	private JFrame frame;
 	private JTextField txtNome;
@@ -70,7 +70,7 @@ public class AlterarFreelancer implements ActionListener{
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					AlterarFreelancer window = new AlterarFreelancer();
+					FiltrarFreelancer window = new FiltrarFreelancer();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -82,7 +82,7 @@ public class AlterarFreelancer implements ActionListener{
 	/**
 	 * Create the application.
 	 */
-	public AlterarFreelancer() {
+	public FiltrarFreelancer() {
 		initialize();
 	}
 
@@ -149,7 +149,7 @@ public class AlterarFreelancer implements ActionListener{
 		
 		
 		
-		JButton btnAlterar = new JButton("Alterar");
+		JButton btnAlterar = new JButton("Filtrar");
 		btnAlterar.setForeground(new Color(255, 255, 255));
 		btnAlterar.setFont(new Font("Arial Black", Font.PLAIN, 16));
 		btnAlterar.setBackground(new Color(0, 0, 255));
@@ -164,7 +164,7 @@ public class AlterarFreelancer implements ActionListener{
 		
 		lblEndereo = new JLabel("Endere\u00E7o:");
 		lblEndereo.setFont(new Font("Arial Black", Font.PLAIN, 18));
-		lblEndereo.setBounds(439, 17, 114, 31);
+		lblEndereo.setBounds(439, 17, 101, 31);
 		frame.getContentPane().add(lblEndereo);
 		
 		label_1 = new JLabel("Cidade:");

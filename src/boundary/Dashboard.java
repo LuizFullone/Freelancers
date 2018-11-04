@@ -20,7 +20,7 @@ import javax.swing.border.LineBorder;
 public class Dashboard implements ActionListener{
 
 	private JFrame frame;
-	String TestBotao = "free";
+	String TestBotao = "empresa";
 
 	/**
 	 * Launch the application.
@@ -141,7 +141,9 @@ public class Dashboard implements ActionListener{
 			vagas.main();
 			frame.setVisible(false);
 		}else if ("Buscar Freelancer".equals(e.getActionCommand())) {
-			//implementar
+			BuscarFreelancer buscar = new BuscarFreelancer();
+			buscar.main();
+			frame.setVisible(false);
 		}
 	}
 }
