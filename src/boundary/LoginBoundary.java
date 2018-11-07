@@ -15,7 +15,7 @@ import java.awt.event.ActionEvent;
 import java.awt.SystemColor;
 import javax.swing.SwingConstants;
 
-public class Login implements ActionListener{
+public class LoginBoundary implements ActionListener{
 
 	private JFrame frame;
 	private JTextField txtUser;
@@ -28,7 +28,7 @@ public class Login implements ActionListener{
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Login window = new Login();
+					LoginBoundary window = new LoginBoundary();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -40,7 +40,7 @@ public class Login implements ActionListener{
 	/**
 	 * Create the application.
 	 */
-	public Login() {
+	public LoginBoundary() {
 		frame = new JFrame("Login");
 		frame.getContentPane().setBackground(new Color(255, 255, 255));
 		frame.setBounds(100, 100, 450, 300);

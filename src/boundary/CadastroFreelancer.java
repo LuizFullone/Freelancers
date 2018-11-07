@@ -27,6 +27,10 @@ import javax.swing.JTable;
 import javax.swing.border.TitledBorder;
 import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
+
+import controller.FreelancerControl;
+import entity.Freelancer;
+
 import javax.swing.JPanel;
 
 public class CadastroFreelancer implements ActionListener{
@@ -233,11 +237,21 @@ public class CadastroFreelancer implements ActionListener{
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		
 		if ("Cancelar".equals(e.getActionCommand())) { 
 			CadastroLogin cadLogin = new CadastroLogin();
 			cadLogin.main();
 			frame.setVisible(false);
 		} else if ("Cadastrar-se".equals(e.getActionCommand())) {
+			
+			Freelancer freelancer = new Freelancer();
+			freelancer.setNomeFreelancer(txtNome.getText());
+			freelancer.setCEP(Integer.parseInt(txtCep.getText()));
+			freelancer.setCpf(Integer.parseInt(txtCpf.getText()));
+			
+			FreelancerControl fc = new FreelancerControl();
+			fc.cadastrarFreelancer(freelancer);
+
 			Dashboard dash = new Dashboard();
 			dash.main();
 			frame.setVisible(false);

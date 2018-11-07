@@ -20,7 +20,7 @@ import javax.swing.border.LineBorder;
 public class Dashboard implements ActionListener{
 
 	private JFrame frame;
-	String TestBotao = "empresa";
+	String TestBotao = "free";
 
 	/**
 	 * Launch the application.

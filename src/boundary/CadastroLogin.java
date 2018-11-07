@@ -12,14 +12,20 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.SystemColor;
 import javax.swing.SwingConstants;
+
+import controller.FreelancerControl;
+import controller.LoginControll;
+import entity.Login;
+
 import javax.swing.JCheckBox;
 
-public class CadastroLogin {
+public class CadastroLogin implements ActionListener{
 
 	private JFrame frame;
 	private JTextField txtUser;
 	private JTextField txtSenha;
 	private JTextField txtConfirmSenha;
+	private JCheckBox chbEmpresa = new JCheckBox("Sou empresa");
 
 	/**
 	 * Launch the application.
@@ -84,30 +90,42 @@ public class CadastroLogin {
 		lblConfirmarSenha.setBounds(33, 130, 179, 31);
 		frame.getContentPane().add(lblConfirmarSenha);
 		
-		JCheckBox chbEmpresa = new JCheckBox("Sou empresa");
 		chbEmpresa.setFont(new Font("Arial Black", Font.PLAIN, 14));
 		chbEmpresa.setBackground(new Color(255, 255, 255));
 		chbEmpresa.setBounds(222, 187, 160, 44);
 		frame.getContentPane().add(chbEmpresa);
 		
 		JButton btnCadastrar = new JButton("Cadastrar-se");
-		btnCadastrar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				if(chbEmpresa.isSelected()) {
-					CadastroEmpresa cadastro = new CadastroEmpresa();
-					cadastro.main();
-					frame.setVisible(false);
-				}else {
-					CadastroFreelancer cadastro = new CadastroFreelancer();
-					cadastro.main();
-					frame.setVisible(false);
-				}
-			}
-		});
 		btnCadastrar.setForeground(new Color(255, 255, 255));
 		btnCadastrar.setFont(new Font("Arial Black", Font.PLAIN, 16));
 		btnCadastrar.setBackground(new Color(0, 0, 255));
 		btnCadastrar.setBounds(222, 270, 183, 36);
+		btnCadastrar.addActionListener(this);
 		frame.getContentPane().add(btnCadastrar);
 	}
-}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if("Cadastrar-se".equals(e.getActionCommand())) {
+			
+			Login login = new Login();
+			login.setUser(txtUser.getText());
+			login.setSenha(txtSenha.getText());
+			
+			LoginControll l = new LoginControll();
+			l.adicionarLogin(login);
+			
+			if(chbEmpresa.isSelected()) {
+				CadastroEmpresa cadastro = new CadastroEmpresa();
+				cadastro.main();
+				frame.setVisible(false);
+			}else {
+				CadastroFreelancer cadastro = new CadastroFreelancer();
+				cadastro.main();
+				frame.setVisible(false);
+			}
+		}
+		}
+		
+	}
+
