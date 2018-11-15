@@ -9,6 +9,7 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.Color;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.awt.event.ActionEvent;
@@ -17,12 +18,17 @@ import javax.swing.JComboBox;
 import java.awt.Component;
 import javax.swing.Box;
 import javax.swing.border.TitledBorder;
+
+import control.EmpresaControl;
+import control.LoginControll;
+import entity.Empresa;
+
 import javax.swing.UIManager;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 import javax.swing.JTextArea;
 
-public class AlterarEmpresa implements ActionListener{
+public class CadastroEmpresaBoundary implements ActionListener{
 
 	private JFrame frame;
 	private JTextField txtNome;
@@ -30,15 +36,14 @@ public class AlterarEmpresa implements ActionListener{
 	private JTextField txtEmail;
 	private JTextField txtCep;
 	private JTextField txtEndereco;
-	private JComboBox cmbUf;
+	private JComboBox<Object> cmbUf;
 	private JTextField txtCidade;
 	private JTextField txtBairro;
-	private JLabel lblEndereo;
-	private JLabel label_1;
-	private JLabel lblNome_1;
-	private JLabel label_2;
 	private JTextField txtInscricaoEst;
 	private JTextField txtRazaoSocial;
+	private JTextArea txtMissao = new JTextArea();
+	private JTextArea txtVisao = new JTextArea();
+	private JTextArea txtValores = new JTextArea();
 
 	/**
 	 * Launch the application.
@@ -47,7 +52,7 @@ public class AlterarEmpresa implements ActionListener{
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					AlterarEmpresa window = new AlterarEmpresa();
+					CadastroEmpresaBoundary window = new CadastroEmpresaBoundary();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -59,7 +64,7 @@ public class AlterarEmpresa implements ActionListener{
 	/**
 	 * Create the application.
 	 */
-	public AlterarEmpresa() {
+	public CadastroEmpresaBoundary() {
 		initialize();
 	}
 
@@ -128,7 +133,11 @@ public class AlterarEmpresa implements ActionListener{
 		lblUf.setBounds(10, 305, 168, 31);
 		frame.getContentPane().add(lblUf);
 		
-		cmbUf = new JComboBox();
+		cmbUf = new JComboBox<Object>();
+		cmbUf.setFont(new java.awt.Font("Dialog", 1, 16));
+		cmbUf.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "", "AC"
+				, "AL", "AM", "AP", "BA", "CE", "DF", "ES", "GO", "MA", "MG", "MS", "MT",
+				"PA", "PB", "PE", "PI", "PR", "RJ", "RN", "RO", "RS", "SC", "SE", "SP", "TO" }));
 		cmbUf.setBounds(171, 305, 51, 20);
 		frame.getContentPane().add(cmbUf);
 		
@@ -176,71 +185,69 @@ public class AlterarEmpresa implements ActionListener{
 		horizontalStrut.setBounds(186, 420, 73, -7);
 		frame.getContentPane().add(horizontalStrut);
 		
-		JPanel panel = new JPanel();
-		panel.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Especialidade da Empresa", TitledBorder.CENTER, TitledBorder.TOP, null, Color.BLACK));
-		panel.setToolTipText("Especialidade da empresa");
-		panel.setBackground(new Color(255, 255, 255));
-		panel.setBounds(438, 11, 376, 522);
-		frame.getContentPane().add(panel);
-		panel.setLayout(null);
+		JPanel panelEspecialidadeEmpresa = new JPanel();
+		panelEspecialidadeEmpresa.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Especialidade da Empresa", TitledBorder.CENTER, TitledBorder.TOP, null, Color.BLACK));
+		panelEspecialidadeEmpresa.setToolTipText("Especialidade da empresa");
+		panelEspecialidadeEmpresa.setBackground(new Color(255, 255, 255));
+		panelEspecialidadeEmpresa.setBounds(438, 11, 376, 522);
+		frame.getContentPane().add(panelEspecialidadeEmpresa);
+		panelEspecialidadeEmpresa.setLayout(null);
 		
 		JLabel lblMissao = new JLabel("Missão");
 		lblMissao.setFont(new Font("Arial Black", Font.PLAIN, 14));
 		lblMissao.setBounds(35, 25, 64, 26);
-		panel.add(lblMissao);
+		panelEspecialidadeEmpresa.add(lblMissao);
 		
-		JTextArea textArea = new JTextArea();
-		textArea.setBackground(Color.WHITE);
-		textArea.setBounds(35, 49, 319, 52);
-		textArea.setBorder(new LineBorder(null));
-		textArea.setOpaque(false);
-		panel.add(textArea);
+		txtMissao.setBackground(Color.WHITE);
+		txtMissao.setBounds(35, 49, 319, 52);
+		txtMissao.setBorder(new LineBorder(null));
+		txtMissao.setOpaque(false);
+		panelEspecialidadeEmpresa.add(txtMissao);
 		
-		JTextArea textArea_1 = new JTextArea();
-		textArea_1.setOpaque(false);
-		textArea_1.setBorder(new LineBorder(null));
-		textArea_1.setBackground(Color.WHITE);
-		textArea_1.setBounds(35, 137, 319, 52);
-		panel.add(textArea_1);
+	
+		txtVisao.setOpaque(false);
+		txtVisao.setBorder(new LineBorder(null));
+		txtVisao.setBackground(Color.WHITE);
+		txtVisao.setBounds(35, 137, 319, 52);
+		panelEspecialidadeEmpresa.add(txtVisao);
 		
-		JLabel lblVisao = new JLabel("Vis\u00E3o");
+		JLabel lblVisao = new JLabel("Visão");
 		lblVisao.setFont(new Font("Arial Black", Font.PLAIN, 14));
 		lblVisao.setBounds(35, 112, 64, 26);
-		panel.add(lblVisao);
+		panelEspecialidadeEmpresa.add(lblVisao);
 		
 		JLabel lblValores = new JLabel("Valores");
 		lblValores.setHorizontalAlignment(SwingConstants.CENTER);
 		lblValores.setFont(new Font("Arial Black", Font.PLAIN, 14));
 		lblValores.setBounds(35, 215, 64, 26);
-		panel.add(lblValores);
+		panelEspecialidadeEmpresa.add(lblValores);
 		
-		JTextArea textArea_2 = new JTextArea();
-		textArea_2.setOpaque(false);
-		textArea_2.setBorder(new LineBorder(null));
-		textArea_2.setBackground(Color.WHITE);
-		textArea_2.setBounds(35, 240, 319, 52);
-		panel.add(textArea_2);
+		txtValores.setOpaque(false);
+		txtValores.setBorder(new LineBorder(null));
+		txtValores.setBackground(Color.WHITE);
+		txtValores.setBounds(35, 240, 319, 52);
+		panelEspecialidadeEmpresa.add(txtValores);
 		
 		JLabel lblQuemSomos = new JLabel("Quem Somos ?");
 		lblQuemSomos.setHorizontalAlignment(SwingConstants.CENTER);
 		lblQuemSomos.setFont(new Font("Arial Black", Font.PLAIN, 14));
 		lblQuemSomos.setBounds(136, 320, 141, 26);
-		panel.add(lblQuemSomos);
+		panelEspecialidadeEmpresa.add(lblQuemSomos);
 		
-		JTextArea textArea_3 = new JTextArea();
-		textArea_3.setOpaque(false);
-		textArea_3.setBorder(new LineBorder(null));
-		textArea_3.setBackground(Color.WHITE);
-		textArea_3.setBounds(35, 357, 319, 129);
-		panel.add(textArea_3);
+		JTextArea txtQuemSomos = new JTextArea();
+		txtQuemSomos.setOpaque(false);
+		txtQuemSomos.setBorder(new LineBorder(null));
+		txtQuemSomos.setBackground(Color.WHITE);
+		txtQuemSomos.setBounds(35, 357, 319, 129);
+		panelEspecialidadeEmpresa.add(txtQuemSomos);
 		
-		JButton btnAlterar = new JButton("Alterar");
-		btnAlterar.setForeground(new Color(0, 0, 0));
-		btnAlterar.setFont(new Font("Arial Black", Font.PLAIN, 16));
-		btnAlterar.setBackground(new Color(204, 255, 204));
-		btnAlterar.setBounds(438, 554, 183, 36);
-		btnAlterar.addActionListener(this);
-		frame.getContentPane().add(btnAlterar);
+		JButton btnCadastrar = new JButton("Cadastrar-se");
+		btnCadastrar.setForeground(new Color(0, 0, 0));
+		btnCadastrar.setFont(new Font("Arial Black", Font.PLAIN, 16));
+		btnCadastrar.setBackground(new Color(204, 255, 204));
+		btnCadastrar.setBounds(438, 554, 183, 36);
+		btnCadastrar.addActionListener(this);
+		frame.getContentPane().add(btnCadastrar);
 		
 		JButton btnCancelar = new JButton("Cancelar");
 		btnCancelar.setForeground(new Color(0, 0, 0));
@@ -254,6 +261,28 @@ public class AlterarEmpresa implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if ("Cadastrar-se".equals(e.getActionCommand())) { 
+			
+			Empresa empresa = new Empresa();
+			
+			empresa.setUf(cmbUf.getSelectedItem());
+			empresa.setNome(txtNome.getText());
+			empresa.setCnpj(txtCnpj.getText());
+			empresa.setEmail(txtEmail.getText());
+			empresa.setCep(Integer.parseInt(txtCep.getText()));
+			empresa.setEndereco(txtEndereco.getText());
+			empresa.setCidade(txtCidade.getText());
+			empresa.setBairro(txtBairro.getText());
+			empresa.setInscricaoEst(txtInscricaoEst.getText());
+			empresa.setRazaoSocial(txtRazaoSocial.getText());
+			empresa.setMissao(txtMissao.getText());
+			empresa.setVisao(txtVisao.getText());
+			empresa.setValores(txtValores.getText());
+			EmpresaControl em = new EmpresaControl();
+			try {
+				em.adicionarEmpresa(empresa);
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
 			DashboardFreelancerBoundary dash = new DashboardFreelancerBoundary();
 			dash.main();
 			frame.setVisible(false);

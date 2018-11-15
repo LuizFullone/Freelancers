@@ -4,6 +4,14 @@ public class Login {
 
 	private String user;
 	private String senha;
+	private String TipoUser;
+	
+	public String getTipoUser() {
+		return TipoUser;
+	}
+	public void setTipoUser(String tipoUser) {
+		TipoUser = tipoUser;
+	}
 	public String getUser() {
 		return user;
 	}

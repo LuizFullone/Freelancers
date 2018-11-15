@@ -10,7 +10,42 @@ public class Freelancer {
 	private Date dataNasc;
 	private String endereco;
 	private int CEP;
+	private String Uf;
+	private String cidade;
+	private String bairro;
+	private String especialidade;
+	private String tempExp;
 	
+	public String getEspecialidade() {
+		return especialidade;
+	}
+	public void setEspecialidade(String especialidade) {
+		this.especialidade = especialidade;
+	}
+	public String getTempExp() {
+		return tempExp;
+	}
+	public void setTempExp(String tempExp) {
+		this.tempExp = tempExp;
+	}
+	public String getUf() {
+		return Uf;
+	}
+	public void setUf(Object object) {
+		Uf = (String) object;
+	}
+	public String getCidade() {
+		return cidade;
+	}
+	public void setCidade(String cidade) {
+		this.cidade = cidade;
+	}
+	public String getBairro() {
+		return bairro;
+	}
+	public void setBairro(String bairro) {
+		this.bairro = bairro;
+	}
 	public String getNomeFreelancer() {
 		return nomeFreelancer;
 	}
