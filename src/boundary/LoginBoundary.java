@@ -1,7 +1,5 @@
 package boundary;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -11,14 +9,9 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.Color;
 import java.awt.event.ActionListener;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.awt.event.ActionEvent;
-import java.awt.SystemColor;
-import javax.swing.SwingConstants;
 
 import control.LoginControll;
-import entity.Login;
 
 public class LoginBoundary implements ActionListener {
 
@@ -26,16 +19,9 @@ public class LoginBoundary implements ActionListener {
 	private JTextField txtUser;
 	private JTextField txtSenha;
 
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		run();
 	}
-
-	/**
-	 * Create the application.
-	 */
 	
 	public static void run() {
 		try {
@@ -99,20 +85,21 @@ public class LoginBoundary implements ActionListener {
 			frame.setVisible(false);
 		} else if ("Login".equals(e.getActionCommand())) {
 			LoginControll l = new LoginControll();
+			
 			if (l.updateUser(txtUser.getText(), txtSenha.getText())) {
-				String test = "freelancer";
-				if ("freelancer".equals(test)) {
+				System.out.println(txtUser.getText());
+				String tipoUser = l.identificaUser(txtUser.getText());
+				if ("freelancer".equals(tipoUser)) {
 					DashboardFreelancerBoundary dash = new DashboardFreelancerBoundary();
 					dash.main();
 					frame.setVisible(false);
-				} else {
+				} else if ("empresa".equals(tipoUser)){
 					DashboardEmpresaBoundary dash = new DashboardEmpresaBoundary();
 					dash.main();
 					frame.setVisible(false);
 				}
 			} else {
 				JOptionPane.showMessageDialog(null, "Usuário não identificado !");
-			}
 		}
 	}
-}
+	}}
