@@ -5,7 +5,9 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-
+import java.util.ArrayList;
+import java.util.List;
+import entity.Freelancer;
 import entity.Login;
 
 public class LoginDAOImpl implements LoginDAO{
@@ -53,6 +55,7 @@ public class LoginDAOImpl implements LoginDAO{
 	}
 
 	public String identificaUser(String nome) {
+		List<Freelancer> lista = new ArrayList<>();
 		try {
 			Connection con = DriverManager.getConnection(url, user, pass);
 			Statement stmt = con.createStatement();

@@ -1,39 +1,24 @@
 package boundary;
 
 import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import java.awt.Font;
-import java.awt.GridLayout;
-
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.util.List;
 import java.awt.event.ActionEvent;
-import java.awt.SystemColor;
-import java.awt.Window;
-
-import javax.swing.SwingConstants;
-import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
-import javax.swing.JSeparator;
-import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
-
 import java.awt.Component;
 import javax.swing.Box;
-import java.awt.Dimension;
 import javax.swing.JTable;
 import javax.swing.border.TitledBorder;
 import javax.swing.UIManager;
-import javax.swing.table.DefaultTableModel;
-
 import control.FreelancerControl;
 import entity.Freelancer;
-
 import javax.swing.JPanel;
 
 public class CadastroFreelancerBoundary implements ActionListener {
@@ -53,11 +38,11 @@ public class CadastroFreelancerBoundary implements ActionListener {
 	private JLabel label_2;
 	private JTextField txtTempoExp;
 	private JPanel panel;
-	private JScrollPane scrollPane;
-	private DefaultTableModel modelo = new DefaultTableModel();
-	private JTable tbEspecialidade = new JTable(modelo);
 	private JTextField txtEspecialidade;
 	private JButton btnMais = new JButton("+");
+	
+	private FreelancerControl control = new FreelancerControl();
+	private JTable tabela = new JTable(control);
 
 	public void main() {
 		EventQueue.invokeLater(new Runnable() {
@@ -88,6 +73,9 @@ public class CadastroFreelancerBoundary implements ActionListener {
 		frame.setBounds(100, 100, 840, 614);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
+		
+		JScrollPane panTabela = new JScrollPane();
+		panTabela.getViewport().add(tabela);
 
 		JLabel lblSenha = new JLabel("CPF:");
 		lblSenha.setFont(new Font("Arial Black", Font.PLAIN, 18));
@@ -219,14 +207,9 @@ public class CadastroFreelancerBoundary implements ActionListener {
 		txtEspecialidade.setBounds(138, 34, 198, 20);
 		panel.add(txtEspecialidade);
 		txtEspecialidade.setColumns(10);
-
-		scrollPane = new JScrollPane();
-		scrollPane.setBounds(50, 396, 746, 105);
-		frame.getContentPane().add(scrollPane);
-
-		tbEspecialidade.setModel(
-				new DefaultTableModel(new Object[][] {}, new String[] { "Especialidade", "Tempo de Experiência" }));
-		scrollPane.setViewportView(tbEspecialidade);
+		
+		panTabela.setBounds(50, 396, 746, 105);
+		frame.getContentPane().add(panTabela);
 
 		btnMais.setBounds(707, 372, 89, 23);
 		frame.getContentPane().add(btnMais);
@@ -235,14 +218,13 @@ public class CadastroFreelancerBoundary implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		
 		Freelancer freelancer = new Freelancer();
 		if ("Cancelar".equals(e.getActionCommand())) {
 			CadastroLoginBoundary cadLogin = new CadastroLoginBoundary();
 			cadLogin.main();
 			frame.setVisible(false);
 		} else if ("Cadastrar-se".equals(e.getActionCommand())) {
-
-			
 			freelancer.setNomeFreelancer(txtNome.getText());
 			freelancer.setCpf(Integer.parseInt(txtCpf.getText()));
 			freelancer.setEmail(txtEmail.getText());
@@ -253,33 +235,24 @@ public class CadastroFreelancerBoundary implements ActionListener {
 			freelancer.setBairro(txtBairro.getText());
 			freelancer.setEspecialidade(txtEspecialidade.getText());
 			freelancer.setTempExp(txtTempoExp.getText());
-
-			FreelancerControl fc = new FreelancerControl();
-			fc.cadastrarFreelancer(freelancer);
-
+			control.cadastrarFreelancer(freelancer);
 			DashboardFreelancerBoundary dash = new DashboardFreelancerBoundary();
 			dash.main();
 			frame.setVisible(false);
-			
 		} else if ("+".equals(e.getActionCommand())) {
+			
 			freelancer.setEspecialidade(txtEspecialidade.getText());
 			freelancer.setTempExp(txtTempoExp.getText());
+			List<Freelancer> lista = control.updateEspecialidade();
 			
-			FreelancerControl fc = new FreelancerControl();
-			fc.cadastrarEspecialidade(freelancer);
-			int numCols = tbEspecialidade.getModel().getColumnCount();
-            FreelancerControl so = new FreelancerControl(); 
-            
-            List<Freelancer> inst = so.ler(null);
-            
-            Object [] fila = new Object[numCols]; 
-            for (Freelancer p: inst) {
-            	modelo.addRow(new Object[]{        
-       			fila[0] = p.getEspecialidade(),
-       			fila[1] = p.getTempExp(),
-            	});
-            } 	
-			((DefaultTableModel) tbEspecialidade.getModel()).addRow(fila);
+			if (lista.size() > 0) {
+				Freelancer free = lista.get(0);
+				txtEspecialidade.setText(free.getEspecialidade());
+				txtTempoExp.setText(free.getTempExp());
+			}
+			tabela.invalidate();
+			tabela.revalidate();
+			tabela.repaint();
 		}
 
 	}
