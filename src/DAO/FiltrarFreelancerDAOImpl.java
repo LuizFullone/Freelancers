@@ -2,6 +2,7 @@ package DAO;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -25,15 +26,34 @@ public class FiltrarFreelancerDAOImpl implements FiltrarFreelancerDAO {
 	}
 
 	@Override
-	public List<FreelancerFiltro> updateFreelancers() {
+	public List<FreelancerFiltro> updateFreelancers(FreelancerFiltro f) {
 		
 		List<FreelancerFiltro> lista = new ArrayList<>();
+		
+		String query = null;
+		
 		try {
 			Connection con = DriverManager.getConnection(url, user, pass);
+			
+			query = "SELECT f.nome, e.nome_especialidade, e.temp_exp FROM freelancer AS f\r\n" + 
+					"INNER JOIN especialidade AS e ON e.fk_freelancer = f.fk_especialidade\r\n" + 
+					"where f.nome like '%"+f.getNome()+"%' && e.nome_especialidade like '%"
+							+ ""+f.getEspecialidade()+"%' && e.temp_exp like '%"+f.getTemp_exp()+"%'";
+			
 			Statement stmt = con.createStatement();
-			String query = "SELECT f.nome, e.nome_especialidade, e.temp_exp FROM freelancer AS f\r\n" + 
-					"INNER JOIN especialidade AS e ON e.fk_freelancer = f.fk_especialidade; ";
+			
+			/*
+			query = "SELECT f.nome, e.nome_especialidade, e.temp_exp FROM freelancer AS f\r\n" + 
+					"INNER JOIN especialidade AS e ON e.fk_freelancer = f.fk_especialidade\r\n" + 
+					"where f.nome like ?";
+			
+			PreparedStatement stmt = con.prepareStatement(query);
+			
+			stmt.setString(1, "%"+f.getNome()+"%");
+			*/
+			
 			ResultSet rs = stmt.executeQuery(query);
+			
 			while (rs.next()) {
 				FreelancerFiltro free = new FreelancerFiltro();
 				

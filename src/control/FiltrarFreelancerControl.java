@@ -14,12 +14,10 @@ public class FiltrarFreelancerControl implements TableModel{
 	
 	public List<FreelancerFiltro> free = new ArrayList<>();
 	public FiltrarFreelancerDAO freeDAO = new FiltrarFreelancerDAOImpl();
-	
-
 	private FiltrarFreelancerDAOImpl filtrar = new FiltrarFreelancerDAOImpl();
 	
-	public List<FreelancerFiltro> updateFreelancers(){
-		free = filtrar.updateFreelancers();
+	public List<FreelancerFiltro> updateFreelancers(FreelancerFiltro f){
+		free = filtrar.updateFreelancers(f);
 		return free;
 	}
 

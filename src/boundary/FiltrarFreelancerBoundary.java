@@ -131,7 +131,11 @@ public class FiltrarFreelancerBoundary implements ActionListener{
 			dash.main();
 			frame.setVisible(false);
 		} else if ("Filtrar".equals(e.getActionCommand())) {
-			List<FreelancerFiltro> lista = control.updateFreelancers();
+			FreelancerFiltro free = new FreelancerFiltro();
+			free.setNome(txtNome.getText());
+			free.setEspecialidade(txtEspecialidade.getText());
+			free.setTemp_exp(txtTempoExp.getText());
+			List<FreelancerFiltro> lista = control.updateFreelancers(free);
 			if (lista.size() > 0) {
 				FreelancerFiltro f = lista.get(0);
 				txtNome.setText( f.getNome() );

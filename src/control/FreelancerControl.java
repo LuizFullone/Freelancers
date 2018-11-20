@@ -1,120 +1,46 @@
 package control;
-
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
+
+import DAO.FiltrarFreelancerDAO;
+import DAO.FiltrarFreelancerDAOImpl;
+import DAO.FreelancerDAO;
+import DAO.FreelancerDAOImpl;
+import entity.Especialidade;
 import entity.Freelancer;
 
+
+
 public class FreelancerControl implements TableModel {
-
-	// private static String url = "jdbc:mysql://localhost:3306/freelancers";
-	private static String url = "jdbc:mysql://localhost:3306/freelancers?useTimezone=true&serverTimezone=UTC";
-	private static String user = "root";
-	private static String pass = "";
-	public List<Freelancer> freelancer = new ArrayList<>();
-
-	public FreelancerControl() {
-		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
-	}
+	
+	public List<Especialidade> especialidade = new ArrayList<>();
+	public FreelancerDAO freeDAO = new FreelancerDAOImpl();
+	private FreelancerDAOImpl dao = new FreelancerDAOImpl();
 
 	public void cadastrarFreelancer(Freelancer f) {
-		try {
-			Connection con = DriverManager.getConnection(url, user, pass);
-			Statement stmt = con.createStatement();
-			String sql = "INSERT INTO freelancer " + " (nome, cpf, email, cep, endereco, especialidade, tempo_exp) "
-					+ " VALUES ('" + f.getNomeFreelancer() + "', " + f.getCpf() + ", " + "'" + f.getEmail() + "', "
-					+ f.getCEP() + ", '" + f.getEndereco() + "', '" + f.getEspecialidade() + "', '" + f.getTempExp()
-					+ "');";
-
-			stmt.executeUpdate(sql);
-			con.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		dao.cadastrarFreelancer(f);
 	}
 
 	public List<Freelancer> ler(Freelancer j) {
-		Freelancer f = new Freelancer();
-		List<Freelancer> cadastros = new ArrayList<>();
-		try {
-			Connection con = DriverManager.getConnection(url, user, pass);
-			Statement stmt = con.createStatement();
-			String query = "SELECT * FROM especialidade;";
-			ResultSet rs = stmt.executeQuery(query);
-			while (rs.next()) {
-				System.out.println(rs.getString("nome"));
-				f.setEspecialidade(rs.getString("nome"));
-				f.setTempExp(rs.getString("temp_exp"));
-				cadastros.add(f);
-			}
-			con.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return cadastros;
-
+			return dao.ler(j);
 	}
 
-	public void cadastrarEspecialidade(Freelancer f) {
-		try {
-			Connection con = DriverManager.getConnection(url, user, pass);
-			Statement stmt = con.createStatement();
-			String sql = "INSERT INTO especialidade " + " (nome, temp_exp) " + " VALUES "
-					+ "('" + f.getEspecialidade()+ "', '" + f.getTempExp() + "');";
-			stmt.executeUpdate(sql);
-			con.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+	public void cadastrarEspecialidade(Especialidade f) {
+		dao.cadastrarEspecialidade(f);
 	}
 	
 	public String encontrarID(String nome) {
-		try {
-			Connection con = DriverManager.getConnection(url, user, pass);
-			Statement stmt = con.createStatement();
-			String query = "select * from freelancer where nome = '"+nome+"';";
-			ResultSet rs = stmt.executeQuery(query);
-			if(rs.next()) {
-				return rs.getString("idFreelancer");
-			}else {
-				return null;
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return null;
+		return dao.encontrarID(nome);
 	}
 	
-	public List<Freelancer> updateEspecialidade() {
-		List<Freelancer> lista = new ArrayList<>();
-		try {
-			Connection con = DriverManager.getConnection(url, user, pass);
-			Statement stmt = con.createStatement();
-			String query = "select nome, temp_exp from especialidade;";
-			ResultSet rs = stmt.executeQuery(query);
-			while(rs.next()) {
-				Freelancer free = new Freelancer();
-				free.setEspecialidade(rs.getString("nome"));
-				free.setTempExp(rs.getString("temp_exp"));
-				lista.add(free);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return lista;
+	public List<Especialidade> updateEspecialidade(Especialidade e) {
+		especialidade = dao.updateEspecialidade();
+		return especialidade;
+		
 	}
 	
-
 	@Override
 	public void addTableModelListener(TableModelListener free) {
 
@@ -146,12 +72,12 @@ public class FreelancerControl implements TableModel {
 	@Override
 	public int getRowCount() {
 		// TODO Auto-generated method stub
-		return freelancer.size();
+		return especialidade.size();
 	}
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
-		Freelancer free = freelancer.get(rowIndex);
+		Especialidade free = especialidade.get(rowIndex);
 		switch (columnIndex) {
 			case 0 : return free.getEspecialidade();
 			case 1 : return free.getTempExp();

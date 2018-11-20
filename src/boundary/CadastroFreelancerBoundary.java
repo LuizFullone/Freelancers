@@ -18,6 +18,7 @@ import javax.swing.JTable;
 import javax.swing.border.TitledBorder;
 import javax.swing.UIManager;
 import control.FreelancerControl;
+import entity.Especialidade;
 import entity.Freelancer;
 import javax.swing.JPanel;
 
@@ -233,20 +234,18 @@ public class CadastroFreelancerBoundary implements ActionListener {
 			freelancer.setUf(cmbUf.getSelectedItem());
 			freelancer.setCidade(txtCidade.getText());
 			freelancer.setBairro(txtBairro.getText());
-			freelancer.setEspecialidade(txtEspecialidade.getText());
-			freelancer.setTempExp(txtTempoExp.getText());
 			control.cadastrarFreelancer(freelancer);
 			DashboardFreelancerBoundary dash = new DashboardFreelancerBoundary();
 			dash.main();
 			frame.setVisible(false);
 		} else if ("+".equals(e.getActionCommand())) {
-			
-			freelancer.setEspecialidade(txtEspecialidade.getText());
-			freelancer.setTempExp(txtTempoExp.getText());
-			List<Freelancer> lista = control.updateEspecialidade();
+			Especialidade esp = new Especialidade();
+			esp.setEspecialidade(txtEspecialidade.getText());
+			esp.setTempExp(txtTempoExp.getText());
+			List<Especialidade> lista = control.updateEspecialidade(esp);
 			
 			if (lista.size() > 0) {
-				Freelancer free = lista.get(0);
+				Especialidade free = lista.get(0);
 				txtEspecialidade.setText(free.getEspecialidade());
 				txtTempoExp.setText(free.getTempExp());
 			}

@@ -2,8 +2,10 @@ package DAO;
 
 import java.util.List;
 
+import entity.FreelancerFiltro;
+
 public interface FiltrarFreelancerDAO {
 
-	List<?> updateFreelancers();
+	List<FreelancerFiltro> updateFreelancers(FreelancerFiltro f);
 	
 }

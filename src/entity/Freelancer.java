@@ -13,21 +13,7 @@ public class Freelancer {
 	private String Uf;
 	private String cidade;
 	private String bairro;
-	private String especialidade;
-	private String tempExp;
 	
-	public String getEspecialidade() {
-		return especialidade;
-	}
-	public void setEspecialidade(String especialidade) {
-		this.especialidade = especialidade;
-	}
-	public String getTempExp() {
-		return tempExp;
-	}
-	public void setTempExp(String tempExp) {
-		this.tempExp = tempExp;
-	}
 	public String getUf() {
 		return Uf;
 	}
