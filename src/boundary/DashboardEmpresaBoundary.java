@@ -126,7 +126,7 @@ public class DashboardEmpresaBoundary implements ActionListener{
 			alterar.main();
 		
 		}else if ("Buscar Freelancer".equals(e.getActionCommand())) {
-			BuscarFreelancerBoundary buscar = new BuscarFreelancerBoundary();
+			FiltrarFreelancerBoundary buscar = new FiltrarFreelancerBoundary();
 			buscar.main();
 			
 		}else if ("CadastrarVaga".equals(e.getActionCommand())) {

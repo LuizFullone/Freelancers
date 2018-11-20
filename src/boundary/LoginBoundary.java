@@ -87,7 +87,6 @@ public class LoginBoundary implements ActionListener {
 			LoginControll l = new LoginControll();
 			
 			if (l.updateUser(txtUser.getText(), txtSenha.getText())) {
-				System.out.println(txtUser.getText());
 				String tipoUser = l.identificaUser(txtUser.getText());
 				if ("freelancer".equals(tipoUser)) {
 					DashboardFreelancerBoundary dash = new DashboardFreelancerBoundary();
