@@ -1,18 +1,10 @@
 package control;
-
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.JOptionPane;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
-
-import DAO.FiltrarFreelancerDAO;
-import DAO.FiltrarFreelancerDAOImpl;
 import DAO.FreelancerDAO;
 import DAO.FreelancerDAOImpl;
 import entity.Especialidade;
@@ -71,6 +63,7 @@ public class FreelancerControl implements TableModel {
 	public void cadastrarEspecialidade(Especialidade f, Login l) {
 		dao.cadastrarEspecialidade(f, l);
 	}
+	
 	
 	public String encontrarID(String nome) {
 		return dao.encontrarID(nome);
