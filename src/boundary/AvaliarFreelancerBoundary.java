@@ -57,9 +57,18 @@ public class AvaliarFreelancerBoundary {
 		lblNota.setBounds(41, 59, 105, 36);
 		frame.getContentPane().add(lblNota);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setBounds(104, 70, 66, 20);
+		JComboBox<Integer> comboBox = new JComboBox<Integer>() ;
+		
+		comboBox.addItem(1);
+		comboBox.addItem(2);
+		comboBox.addItem(3);
+		comboBox.addItem(4);
+		comboBox.addItem(5);
+		comboBox.setBounds(104, 70, 70, 30);
 		frame.getContentPane().add(comboBox);
+		comboBox.setFont(new java.awt.Font("Dialog", 1, 16));
+		//comboBox.setModel(new javax.swing.DefaultComboBoxModel(new Integer [] { 1,2,3,4, 5 }));
+		
 		
 		JLabel lblComentrio = new JLabel("Comentário:");
 		lblComentrio.setFont(new Font("Arial Black", Font.PLAIN, 16));

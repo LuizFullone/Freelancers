@@ -57,15 +57,17 @@ public class AvaliarEmpresaBoundary {
 		lblNota.setBounds(41, 59, 105, 36);
 		frame.getContentPane().add(lblNota);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setBounds(104, 70, 66, 20);
+		JComboBox comboBox = new JComboBox<Object>() ;
+		comboBox.setFont(new java.awt.Font("Dialog", 1, 16));
+		comboBox.setModel(new javax.swing.DefaultComboBoxModel(new String [] { "1","2","3","4","5"}));
+		comboBox.setBounds(104, 70, 70, 30);
 		frame.getContentPane().add(comboBox);
 		
 		JLabel lblComentrio = new JLabel("Comentário:");
 		lblComentrio.setFont(new Font("Arial Black", Font.PLAIN, 16));
 		lblComentrio.setBounds(165, 101, 130, 36);
+
 		frame.getContentPane().add(lblComentrio);
-		
 		JTextArea textArea = new JTextArea();
 		textArea.setBounds(25, 137, 399, 81);
 		textArea.setBorder(new LineBorder(null));

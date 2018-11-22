@@ -7,8 +7,12 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.JOptionPane;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
+
+import DAO.FreelancerDAOImpl;
 import entity.Freelancer;
 
 public class FreelancerControl implements TableModel {
@@ -76,6 +80,35 @@ public class FreelancerControl implements TableModel {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public boolean validarFreelancerCpf(String cpf) {
+		FreelancerDAOImpl freedao = new FreelancerDAOImpl();
+		
+		if(freedao.validarFreelancerCpf(cpf)) {
+			return true;
+		}
+		
+		return false;
+		
+	}
+	
+	public void alterarFreelancer(Freelancer f) {
+		FreelancerDAOImpl daoFree = new FreelancerDAOImpl();
+		if(f.getEmail() == null){
+			f.setEmail(daoFree.buscarEmailCpf(Integer.toString(f.getCpf())));
+		}
+		if(f.getEndereco() == null) {
+			f.setEndereco(daoFree.buscarEnderecoCpf(Integer.toString(f.getCpf())));
+		}
+		if(f.getCEP() == 0) {
+			f.setCEP(daoFree.buscarCepCpf(Integer.toString(f.getCpf())));
+		}
+		if(f.getNomeFreelancer() == null) {
+			f.setNomeFreelancer(daoFree.buscarNomeCpf(Integer.toString(f.getCpf())));
+		}
+		daoFree.alterarFreelancer(f);
+		JOptionPane.showMessageDialog(null, "Dados Alterados");
 	}
 	
 	public String encontrarID(String nome) {
