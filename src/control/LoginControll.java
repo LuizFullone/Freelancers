@@ -1,5 +1,7 @@
 package control;
 
+import javax.swing.JTextField;
+
 import DAO.LoginDAOImpl;
 import entity.Login;
 
@@ -11,8 +13,8 @@ public class LoginControll {
 		logDAO.adicionarLogin(l);
 	}
 	
-	public boolean updateUser(String usuario, String senha) {
-		return logDAO.updateUser(usuario, senha);
+	public int updateUser(String usuario, String txtSenha) {
+		return logDAO.updateUser(usuario, txtSenha);
 	}
 	
 

@@ -10,6 +10,7 @@ import DAO.FreelancerDAO;
 import DAO.FreelancerDAOImpl;
 import entity.Especialidade;
 import entity.Freelancer;
+import entity.Login;
 
 
 
@@ -18,25 +19,29 @@ public class FreelancerControl implements TableModel {
 	public List<Especialidade> especialidade = new ArrayList<>();
 	public FreelancerDAO freeDAO = new FreelancerDAOImpl();
 	private FreelancerDAOImpl dao = new FreelancerDAOImpl();
+	
+	public boolean updateuser(int id) {
+		return dao.updateuser(id);
+	}
 
-	public void cadastrarFreelancer(Freelancer f) {
-		dao.cadastrarFreelancer(f);
+	public void cadastrarFreelancer(Freelancer f, Login l) {
+		dao.cadastrarFreelancer(f,l);
 	}
 
 	public List<Freelancer> ler(Freelancer j) {
 			return dao.ler(j);
 	}
 
-	public void cadastrarEspecialidade(Especialidade f) {
-		dao.cadastrarEspecialidade(f);
+	public void cadastrarEspecialidade(Especialidade f, Login l) {
+		dao.cadastrarEspecialidade(f, l);
 	}
 	
 	public String encontrarID(String nome) {
 		return dao.encontrarID(nome);
 	}
 	
-	public List<Especialidade> updateEspecialidade(Especialidade e) {
-		especialidade = dao.updateEspecialidade();
+	public List<Especialidade> updateEspecialidade(Especialidade e, Login l) {
+		especialidade = dao.updateEspecialidade(l);
 		return especialidade;
 		
 	}

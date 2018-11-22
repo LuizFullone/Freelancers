@@ -20,6 +20,8 @@ import javax.swing.UIManager;
 import control.FreelancerControl;
 import entity.Especialidade;
 import entity.Freelancer;
+import entity.Login;
+
 import javax.swing.JPanel;
 
 public class CadastroFreelancerBoundary implements ActionListener {
@@ -41,15 +43,15 @@ public class CadastroFreelancerBoundary implements ActionListener {
 	private JPanel panel;
 	private JTextField txtEspecialidade;
 	private JButton btnMais = new JButton("+");
-	
 	private FreelancerControl control = new FreelancerControl();
 	private JTable tabela = new JTable(control);
-
-	public void main() {
+	private Login l = new Login();
+	
+	public void main(Login login) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					CadastroFreelancerBoundary window = new CadastroFreelancerBoundary();
+					CadastroFreelancerBoundary window = new CadastroFreelancerBoundary(login);
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -60,8 +62,11 @@ public class CadastroFreelancerBoundary implements ActionListener {
 
 	/**
 	 * Create the application.
+	 * @param login 
 	 */
-	public CadastroFreelancerBoundary() {
+	public CadastroFreelancerBoundary(Login login) {
+		l.setId(login.getId());
+		System.out.println(l.getId());
 		initialize();
 	}
 
@@ -74,9 +79,9 @@ public class CadastroFreelancerBoundary implements ActionListener {
 		frame.setBounds(100, 100, 840, 614);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-		
+
 		JScrollPane panTabela = new JScrollPane();
-		panTabela.getViewport().add(tabela);
+		panTabela.setViewportView(tabela);
 
 		JLabel lblSenha = new JLabel("CPF:");
 		lblSenha.setFont(new Font("Arial Black", Font.PLAIN, 18));
@@ -155,12 +160,12 @@ public class CadastroFreelancerBoundary implements ActionListener {
 		label_2.setFont(new Font("Arial Black", Font.PLAIN, 18));
 		label_2.setBounds(439, 80, 73, 31);
 		frame.getContentPane().add(label_2);
-		
+
 		cmbUf = new JComboBox<Object>();
 		cmbUf.setFont(new java.awt.Font("Dialog", 1, 16));
-		cmbUf.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "", "AC"
-				, "AL", "AM", "AP", "BA", "CE", "DF", "ES", "GO", "MA", "MG", "MS", "MT",
-				"PA", "PB", "PE", "PI", "PR", "RJ", "RN", "RO", "RS", "SC", "SE", "SP", "TO" }));
+		cmbUf.setModel(new javax.swing.DefaultComboBoxModel(
+				new String[] { "", "AC", "AL", "AM", "AP", "BA", "CE", "DF", "ES", "GO", "MA", "MG", "MS", "MT", "PA",
+						"PB", "PE", "PI", "PR", "RJ", "RN", "RO", "RS", "SC", "SE", "SP", "TO" }));
 		cmbUf.setBounds(563, 83, 51, 20);
 		frame.getContentPane().add(cmbUf);
 
@@ -200,26 +205,31 @@ public class CadastroFreelancerBoundary implements ActionListener {
 		lblTempoDeExperiencia.setFont(new Font("Arial Black", Font.PLAIN, 14));
 
 		txtTempoExp = new JTextField();
+		txtTempoExp.setEnabled(false);
 		txtTempoExp.setBounds(523, 34, 198, 20);
 		panel.add(txtTempoExp);
 		txtTempoExp.setColumns(10);
 
 		txtEspecialidade = new JTextField();
+		txtEspecialidade.setEnabled(false);
 		txtEspecialidade.setBounds(138, 34, 198, 20);
 		panel.add(txtEspecialidade);
 		txtEspecialidade.setColumns(10);
-		
-		panTabela.setBounds(50, 396, 746, 105);
+
+		panTabela.setBounds(50, 412, 746, 105);
 		frame.getContentPane().add(panTabela);
 
-		btnMais.setBounds(707, 372, 89, 23);
+		JLabel lblInformacao = new JLabel("(Clique no mais para cadastrar suas especialidades)");
+		lblInformacao.setBounds(398, 252, 286, 14);
+		frame.getContentPane().add(lblInformacao);
+
+		btnMais.setBounds(707, 248, 89, 23);
 		frame.getContentPane().add(btnMais);
 		btnMais.addActionListener(this);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		
 		Freelancer freelancer = new Freelancer();
 		if ("Cancelar".equals(e.getActionCommand())) {
 			CadastroLoginBoundary cadLogin = new CadastroLoginBoundary();
@@ -234,24 +244,45 @@ public class CadastroFreelancerBoundary implements ActionListener {
 			freelancer.setUf(cmbUf.getSelectedItem());
 			freelancer.setCidade(txtCidade.getText());
 			freelancer.setBairro(txtBairro.getText());
-			control.cadastrarFreelancer(freelancer);
+			if (!control.updateuser(l.getId())) {
+				control.cadastrarFreelancer(freelancer,l);
+			}
 			DashboardFreelancerBoundary dash = new DashboardFreelancerBoundary();
 			dash.main();
 			frame.setVisible(false);
 		} else if ("+".equals(e.getActionCommand())) {
-			Especialidade esp = new Especialidade();
-			esp.setEspecialidade(txtEspecialidade.getText());
-			esp.setTempExp(txtTempoExp.getText());
-			List<Especialidade> lista = control.updateEspecialidade(esp);
-			
-			if (lista.size() > 0) {
-				Especialidade free = lista.get(0);
-				txtEspecialidade.setText(free.getEspecialidade());
-				txtTempoExp.setText(free.getTempExp());
+			System.out.println(txtEspecialidade.isEnabled());
+			if (!txtEspecialidade.isEnabled()) {
+				txtEspecialidade.setEnabled(true);
+				txtTempoExp.setEnabled(true);
+			} else {
+				freelancer.setNomeFreelancer(txtNome.getText());
+				freelancer.setCpf(Integer.parseInt(txtCpf.getText()));
+				freelancer.setEmail(txtEmail.getText());
+				freelancer.setCEP(Integer.parseInt(txtCep.getText()));
+				freelancer.setEndereco(txtEndereco.getText());
+				freelancer.setUf(cmbUf.getSelectedItem());
+				freelancer.setCidade(txtCidade.getText());
+				freelancer.setBairro(txtBairro.getText());
+				if (!control.updateuser(l.getId())) {
+					control.cadastrarFreelancer(freelancer,l);
+				}
+				Especialidade esp = new Especialidade();
+				esp.setEspecialidade(txtEspecialidade.getText());
+				esp.setTempExp(txtTempoExp.getText());
+				esp.setFk_freelancer(l.getId());
+				System.out.println(l.getId());
+				control.cadastrarEspecialidade(esp,l);
+				List<Especialidade> lista = control.updateEspecialidade(esp,l);
+				if (lista.size() > 0) {
+					Especialidade free = lista.get(0);
+					txtEspecialidade.setText(free.getEspecialidade());
+					txtTempoExp.setText(free.getTempExp());
+				}
+				tabela.invalidate();
+				tabela.revalidate();
+				tabela.repaint();
 			}
-			tabela.invalidate();
-			tabela.revalidate();
-			tabela.repaint();
 		}
 
 	}

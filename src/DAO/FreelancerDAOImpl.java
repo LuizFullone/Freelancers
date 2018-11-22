@@ -10,6 +10,7 @@ import java.util.List;
 
 import entity.Especialidade;
 import entity.Freelancer;
+import entity.Login;
 
 public class FreelancerDAOImpl implements FreelancerDAO{
 	
@@ -27,13 +28,13 @@ public class FreelancerDAOImpl implements FreelancerDAO{
 	}
 
 	@Override
-	public void cadastrarFreelancer(Freelancer f) {
+	public void cadastrarFreelancer(Freelancer f, Login l) {
 		try {
 			Connection con = DriverManager.getConnection(url, user, pass);
 			Statement stmt = con.createStatement();
-			String sql = "INSERT INTO freelancer " + " (nome, cpf, email, cep, endereco, especialidade, tempo_exp) "
+			String sql = "INSERT INTO freelancer " + " (nome, cpf, email, cep, endereco, uf , cidade , bairro , fk_login) "
 					+ " VALUES ('" + f.getNomeFreelancer() + "', " + f.getCpf() + ", " + "'" + f.getEmail() + "', "
-					+ f.getCEP() + ", '" + f.getEndereco() + "');";
+					+ f.getCEP() + ", '" + f.getEndereco() + "','"+f.getUf()+"', '"+f.getCidade()+"','"+f.getBairro()+"', "+l.getId()+");";
 
 			stmt.executeUpdate(sql);
 			con.close();
@@ -67,12 +68,12 @@ public class FreelancerDAOImpl implements FreelancerDAO{
 	}
 
 	@Override
-	public void cadastrarEspecialidade(Especialidade f) {
+	public void cadastrarEspecialidade(Especialidade f, Login l) {
 		try {
 			Connection con = DriverManager.getConnection(url, user, pass);
 			Statement stmt = con.createStatement();
-			String sql = "INSERT INTO especialidade " + " (nome, temp_exp) " + " VALUES "
-					+ "('" + f.getEspecialidade()+ "', '" + f.getTempExp() + "');";
+			String sql = "INSERT INTO especialidade " + " (nome_especialidade, temp_exp, fk_freelancer) " + " VALUES "
+					+ "('" + f.getEspecialidade()+ "', '" + f.getTempExp() + "',"+l.getId()+");";
 			stmt.executeUpdate(sql);
 			con.close();
 		} catch (SQLException e) {
@@ -99,12 +100,12 @@ public class FreelancerDAOImpl implements FreelancerDAO{
 	}
 
 	@Override
-	public List<Especialidade> updateEspecialidade() {
+	public List<Especialidade> updateEspecialidade(Login l) {
 		List<Especialidade> lista = new ArrayList<>();
 		try {
 			Connection con = DriverManager.getConnection(url, user, pass);
 			Statement stmt = con.createStatement();
-			String query = "select nome_especialidade, temp_exp from especialidade;";
+			String query = "select nome_especialidade, temp_exp from especialidade where fk_freelancer = "+l.getId()+";";
 			ResultSet rs = stmt.executeQuery(query);
 			while(rs.next()) {
 				Especialidade esp = new Especialidade();
@@ -116,6 +117,25 @@ public class FreelancerDAOImpl implements FreelancerDAO{
 			e.printStackTrace();
 		}
 		return lista;
+	}
+
+	@Override
+	public boolean updateuser(int id) {
+		try {
+			Connection con = DriverManager.getConnection(url, user, pass);
+			Statement stmt = con.createStatement();
+			Login l = new Login();
+			String query = "select * from freelancer where fk_login = "+l.getId()+";";
+			ResultSet rs = stmt.executeQuery(query);
+			if(rs.next()) {
+				return true;
+			}else {
+				return false;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
 	}
 
 }

@@ -120,14 +120,16 @@ public class CadastroLoginBoundary implements ActionListener{
 			
 			LoginControll l = new LoginControll();
 			l.adicionarLogin(login);
+			login.setId(l.updateUser(txtUser.getText(), txtSenha.getText()));
+			System.out.println(login.getId());
 			
 			if(chbEmpresa.isSelected()) {
 				CadastroEmpresaBoundary cadastro = new CadastroEmpresaBoundary();
 				cadastro.main();
 				frame.setVisible(false);
 			}else {
-				CadastroFreelancerBoundary cadastro = new CadastroFreelancerBoundary();
-				cadastro.main();
+				CadastroFreelancerBoundary cadastro = new CadastroFreelancerBoundary(login);
+				cadastro.main(login);
 				frame.setVisible(false);
 			}
 		}

@@ -28,27 +28,34 @@ public class LoginDAOImpl implements LoginDAO{
 			Statement stmt = con.createStatement();
 			String sql = "INSERT INTO login (nome_user, senha, tipo_user) VALUES ('"+l.getUser()+"','"+l.getSenha()+"','"+l.getTipoUser()+"')";
 			stmt.executeUpdate(sql);
+			sql = "select idlogin from login where nome_user = '"+l.getUser()+"';";
+			ResultSet rs = stmt.executeQuery(sql);
+			if(rs.next()) {
+				l.setId(Integer.parseInt(rs.getString("idlogin")));
+			}else {
+				System.out.println("erro");
+			}
 			con.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
 
-	public boolean updateUser(String usuario, String senha) {
+	public int updateUser(String usuario, String senha) {
 		try {
 			Connection con = DriverManager.getConnection(url, user, pass);
 			Statement stmt = con.createStatement();
-			String query = "select nome_user from freelancers.login where nome_user = '"+usuario+"' && senha = '"+senha+"';";
+			String query = "select idlogin from freelancers.login where nome_user = '"+usuario+"' && senha = '"+senha+"';";
 			ResultSet rs = stmt.executeQuery(query);
 			if (rs.next()) {
-				return true;
+				return rs.getInt("idlogin");
 			}else {
-				return false;
+				return 0;
 			}	
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return false;
+		return 0;
 	}
 
 	public String identificaUser(String nome) {
