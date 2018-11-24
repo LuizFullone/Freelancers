@@ -13,18 +13,6 @@ import entity.FreelancerFiltro;
 
 public class FiltrarFreelancerDAOImpl implements FiltrarFreelancerDAO {
 
-	private static String url = "jdbc:mysql://localhost:3306/freelancers?useTimezone=true&serverTimezone=UTC";
-	private static String user = "root";
-	private static String pass = "";
-
-	public FiltrarFreelancerDAOImpl() {
-		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
-	}
-
 	@Override
 	public List<FreelancerFiltro> updateFreelancers(FreelancerFiltro f) {
 		
@@ -33,7 +21,7 @@ public class FiltrarFreelancerDAOImpl implements FiltrarFreelancerDAO {
 		String query = null;
 		
 		try {
-			Connection con = DriverManager.getConnection(url, user, pass);
+			Connection con = new Conexao().getConnection();
 			
 			query = "SELECT f.nome, e.nome_especialidade, e.temp_exp FROM freelancer AS f\r\n" + 
 					"INNER JOIN especialidade AS e ON e.fk_freelancer = f.fk_login\r\n" + 

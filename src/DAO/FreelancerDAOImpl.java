@@ -14,16 +14,13 @@ import entity.Login;
 
 public class FreelancerDAOImpl implements FreelancerDAO {
 
-	private static String url = "jdbc:mysql://localhost:3306/freelancers?useTimezone=true&serverTimezone=UTC";
-	private static String user = "root";
-	private static String pass = "";
 	private Connection con;
+
 
 	@Override
 	public void alterarFreelancer(Freelancer f) {
 
 		try {
-			con = DriverManager.getConnection(url, user, pass);
 			/*String sql = "UPDATE freelancer SET nome = '?', email = '?', cep = ?, endereco = '?' where cpf = '?'";
 			PreparedStatement stmt = con.prepareStatement(sql);
 			stmt.setString(1, f.getNomeFreelancer());
@@ -44,18 +41,12 @@ public class FreelancerDAOImpl implements FreelancerDAO {
 	}
 
 	public FreelancerDAOImpl() {
-		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		this.con = new Conexao().getConnection();
 	}
 
 	@Override
 	public boolean validarFreelancerCpf(String cpf) {
 		try {
-			con = DriverManager.getConnection(url, user, pass);
 		//	String sql = "SELECT nome FROM freelancer WHERE cpf = '?'";
 		//	PreparedStatement stmt = con.prepareStatement(sql);
 		//	stmt.setString(1, cpf); 
@@ -76,7 +67,6 @@ public class FreelancerDAOImpl implements FreelancerDAO {
 	@Override
 	public String buscarEmailCpf(String cpf) {
 		try {
-			con = DriverManager.getConnection(url, user, pass);
 			/*String sql = "SELECT email FROM freelancer WHERE cpf = '?'";
 			PreparedStatement stmt = con.prepareStatement(sql);
 			stmt.setString(1, cpf);
@@ -99,7 +89,6 @@ public class FreelancerDAOImpl implements FreelancerDAO {
 	@Override
 	public String buscarEnderecoCpf(String cpf) {
 		try {
-			con = DriverManager.getConnection(url, user, pass);
 			/*String sql = "SELECT endereco FROM freelancer WHERE cpf = '?'";
 			PreparedStatement stmt = con.prepareStatement(sql);
 			stmt.setString(1, cpf);
@@ -122,7 +111,6 @@ public class FreelancerDAOImpl implements FreelancerDAO {
 	@Override
 	public int buscarCepCpf(String cpf) {
 		try {
-			con = DriverManager.getConnection(url, user, pass);
 			/*
 			String sql = "SELECT cep FROM freelancer WHERE cpf = '?'";
 			PreparedStatement stmt = con.prepareStatement(sql);
@@ -138,7 +126,6 @@ public class FreelancerDAOImpl implements FreelancerDAO {
 			}
 			return rs.getInt("cep");
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return -1;
@@ -147,7 +134,6 @@ public class FreelancerDAOImpl implements FreelancerDAO {
 	@Override
 	public String buscarNomeCpf(String cpf) {
 		try {
-			con = DriverManager.getConnection(url, user, pass);
 			/*String sql = "SELECT nome FROM freelancer WHERE cpf = '?'";
 			PreparedStatement stmt = con.prepareStatement(sql);
 			stmt.setString(1, cpf);
@@ -169,7 +155,6 @@ public class FreelancerDAOImpl implements FreelancerDAO {
 	@Override
 	public void cadastrarFreelancer(Freelancer f, Login l) {
 		try {
-			Connection con = DriverManager.getConnection(url, user, pass);
 			Statement stmt = con.createStatement();
 			String sql = "INSERT INTO freelancer "
 					+ " (nome, cpf, email, cep, endereco, uf , cidade , bairro , fk_login) " + " VALUES ('"
@@ -188,7 +173,6 @@ public class FreelancerDAOImpl implements FreelancerDAO {
 	@Override
 	public void cadastrarEspecialidade(Especialidade f, Login l) {
 		try {
-			Connection con = DriverManager.getConnection(url, user, pass);
 			Statement stmt = con.createStatement();
 			String sql = "INSERT INTO especialidade " + " (nome_especialidade, temp_exp, fk_freelancer) " + " VALUES "
 					+ "('" + f.getEspecialidade() + "', '" + f.getTempExp() + "'," + l.getId() + ");";
@@ -202,7 +186,6 @@ public class FreelancerDAOImpl implements FreelancerDAO {
 	@Override
 	public String encontrarID(String nome) {
 		try {
-			Connection con = DriverManager.getConnection(url, user, pass);
 			Statement stmt = con.createStatement();
 			String query = "select * from freelancer where nome = '" + nome + "';";
 			ResultSet rs = stmt.executeQuery(query);
@@ -221,7 +204,6 @@ public class FreelancerDAOImpl implements FreelancerDAO {
 	public List<Especialidade> updateEspecialidade(Login l) {
 		List<Especialidade> lista = new ArrayList<>();
 		try {
-			Connection con = DriverManager.getConnection(url, user, pass);
 			Statement stmt = con.createStatement();
 			String query = "select nome_especialidade, temp_exp from especialidade where fk_freelancer = " + l.getId()
 					+ ";";
@@ -241,12 +223,12 @@ public class FreelancerDAOImpl implements FreelancerDAO {
 	@Override
 	public boolean updateuser(Login l) {
 		try {
-			Connection con = DriverManager.getConnection(url, user, pass);
+			
 			Statement stmt = con.createStatement();
 			String query = "select * from freelancer where fk_login = " + l.getId() + ";";
 			System.out.println(l.getId());
 			ResultSet rs = stmt.executeQuery(query);
-			
+
 			if (rs.next()) {
 				return true;
 			} else {
@@ -261,7 +243,6 @@ public class FreelancerDAOImpl implements FreelancerDAO {
 	@Override
 	public Freelancer update(Login l) {
 		try {
-			Connection con = DriverManager.getConnection(url, user, pass);
 			Statement stmt = con.createStatement();
 			String query = "select * from freelancer where fk_login = " + l.getId() + ";";
 			System.out.println(l.getId());
@@ -269,12 +250,12 @@ public class FreelancerDAOImpl implements FreelancerDAO {
 			if (rs.next()) {
 				Freelancer f = new Freelancer();
 				f.setNomeFreelancer(rs.getString("nome"));
-				f.setBairro("bairro");
-				f.setCEP(Integer.parseInt("cep"));
-				f.setCidade("cidade");
-				f.setEmail("email");
-				f.setEndereco("endereco");
-				f.setUf("if");
+				f.setBairro(rs.getString("bairro"));
+				f.setCEP(rs.getInt("cep"));
+				f.setCidade(rs.getString("cidade"));
+				f.setEmail(rs.getString("email"));
+				f.setEndereco(rs.getString("endereco"));
+				f.setUf(rs.getString("uf"));
 				return f;
 			} else {
 				return null;
