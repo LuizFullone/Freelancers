@@ -19,45 +19,38 @@ public class FreelancerControl implements TableModel {
 	public FreelancerDAO freeDAO = new FreelancerDAOImpl();
 	private FreelancerDAOImpl dao = new FreelancerDAOImpl();
 	
-	public boolean updateuser(int id) {
-		return dao.updateuser(id);
+	public boolean updateuser(Login l) {
+		return dao.updateuser(l);
 	}
 
 	public void cadastrarFreelancer(Freelancer f, Login l) {
 		dao.cadastrarFreelancer(f,l);
 	}
 	public boolean validarFreelancerCpf(String cpf) {
+		
 		FreelancerDAOImpl freedao = new FreelancerDAOImpl();
 		
-		if(freedao.validarFreelancerCpf(cpf)) {
-			return true;
-		}
-		
-		return false;
-		
+		return freedao.validarFreelancerCpf(cpf);
+			
+			
 	}
 	
 	public void alterarFreelancer(Freelancer f) {
 		FreelancerDAOImpl daoFree = new FreelancerDAOImpl();
 		if(f.getEmail() == null){
-			f.setEmail(daoFree.buscarEmailCpf(Integer.toString(f.getCpf())));
+			f.setEmail(daoFree.buscarEmailCpf(f.getCpf()));
 		}
 		if(f.getEndereco() == null) {
-			f.setEndereco(daoFree.buscarEnderecoCpf(Integer.toString(f.getCpf())));
+			f.setEndereco(daoFree.buscarEnderecoCpf(f.getCpf()));
 		}
 		if(f.getCEP() == 0) {
-			f.setCEP(daoFree.buscarCepCpf(Integer.toString(f.getCpf())));
+			f.setCEP(daoFree.buscarCepCpf(f.getCpf()));
 		}
 		if(f.getNomeFreelancer() == null) {
-			f.setNomeFreelancer(daoFree.buscarNomeCpf(Integer.toString(f.getCpf())));
+			f.setNomeFreelancer(daoFree.buscarNomeCpf(f.getCpf()));
 		}
 		daoFree.alterarFreelancer(f);
 		JOptionPane.showMessageDialog(null, "Dados Alterados");
-	}
-	
-
-	public List<Freelancer> ler(Freelancer j) {
-			return dao.ler(j);
 	}
 
 	public void cadastrarEspecialidade(Especialidade f, Login l) {
@@ -73,6 +66,10 @@ public class FreelancerControl implements TableModel {
 		especialidade = dao.updateEspecialidade(l);
 		return especialidade;
 		
+	}
+	
+	public Freelancer update(Login l) {
+		return dao.update(l);
 	}
 	
 	@Override

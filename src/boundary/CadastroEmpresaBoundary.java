@@ -283,7 +283,7 @@ public class CadastroEmpresaBoundary implements ActionListener{
 			} catch (SQLException e1) {
 				e1.printStackTrace();
 			}
-			DashboardFreelancerBoundary dash = new DashboardFreelancerBoundary();
+			DashboardEmpresaBoundary dash = new DashboardEmpresaBoundary();
 			dash.main();
 			frame.setVisible(false);
 		} else if ("Cancelar".equals(e.getActionCommand())) {
