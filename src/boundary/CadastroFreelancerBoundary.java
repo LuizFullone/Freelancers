@@ -66,7 +66,6 @@ public class CadastroFreelancerBoundary implements ActionListener {
 	 */
 	public CadastroFreelancerBoundary(Login login) {
 		l.setId(login.getId());
-		System.out.println(l.getId());
 		initialize();
 	}
 
@@ -237,41 +236,41 @@ public class CadastroFreelancerBoundary implements ActionListener {
 			frame.setVisible(false);
 		} else if ("Cadastrar-se".equals(e.getActionCommand())) {
 			freelancer.setNomeFreelancer(txtNome.getText());
-			freelancer.setCpf(Integer.parseInt(txtCpf.getText()));
+			freelancer.setCpf((txtCpf.getText()));
 			freelancer.setEmail(txtEmail.getText());
 			freelancer.setCEP(Integer.parseInt(txtCep.getText()));
 			freelancer.setEndereco(txtEndereco.getText());
 			freelancer.setUf(cmbUf.getSelectedItem());
 			freelancer.setCidade(txtCidade.getText());
 			freelancer.setBairro(txtBairro.getText());
-			if (!control.updateuser(l.getId())) {
+			if (!control.updateuser(l)) {
 				control.cadastrarFreelancer(freelancer,l);
 			}
-			DashboardFreelancerBoundary dash = new DashboardFreelancerBoundary();
-			dash.main();
+			DashboardFreelancerBoundary dash = new DashboardFreelancerBoundary(l);
+			dash.main(l);
 			frame.setVisible(false);
 		} else if ("+".equals(e.getActionCommand())) {
-			System.out.println(txtEspecialidade.isEnabled());
 			if (!txtEspecialidade.isEnabled()) {
 				txtEspecialidade.setEnabled(true);
 				txtTempoExp.setEnabled(true);
 			} else {
 				freelancer.setNomeFreelancer(txtNome.getText());
-				freelancer.setCpf(Integer.parseInt(txtCpf.getText()));
+				freelancer.setCpf(txtCpf.getText());
 				freelancer.setEmail(txtEmail.getText());
 				freelancer.setCEP(Integer.parseInt(txtCep.getText()));
 				freelancer.setEndereco(txtEndereco.getText());
 				freelancer.setUf(cmbUf.getSelectedItem());
 				freelancer.setCidade(txtCidade.getText());
 				freelancer.setBairro(txtBairro.getText());
-				if (!control.updateuser(l.getId())) {
+				
+				if (!control.updateuser(l)) {
 					control.cadastrarFreelancer(freelancer,l);
 				}
+				
 				Especialidade esp = new Especialidade();
 				esp.setEspecialidade(txtEspecialidade.getText());
 				esp.setTempExp(txtTempoExp.getText());
 				esp.setFk_freelancer(l.getId());
-				System.out.println(l.getId());
 				control.cadastrarEspecialidade(esp,l);
 				List<Especialidade> lista = control.updateEspecialidade(esp,l);
 				if (lista.size() > 0) {

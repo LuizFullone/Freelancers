@@ -9,15 +9,13 @@ public interface FreelancerDAO {
 
 	public void cadastrarFreelancer(Freelancer f, Login l);
 	
-	public List<Freelancer> ler(Freelancer j);
-	
 	public String encontrarID(String nome);
 	
 	public List<Especialidade> updateEspecialidade(Login l);
 	
 	void cadastrarEspecialidade(Especialidade f, Login l);
 	
-	public boolean updateuser(int id);
+	public boolean updateuser(Login l);
 	
 	public void alterarFreelancer(Freelancer f) throws SQLException;
 	
@@ -29,5 +27,7 @@ public interface FreelancerDAO {
 	
 	public int buscarCepCpf(String cpf);
 	public String buscarNomeCpf(String cpf);
+
+	public Freelancer update(Login l);
 
 }

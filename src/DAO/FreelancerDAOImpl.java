@@ -24,15 +24,18 @@ public class FreelancerDAOImpl implements FreelancerDAO {
 
 		try {
 			con = DriverManager.getConnection(url, user, pass);
-			String sql = "UPDATE freelancer SET nome = '?', email = '?', cep = ?, endereco = '?' where cpf = '?'";
+			/*String sql = "UPDATE freelancer SET nome = '?', email = '?', cep = ?, endereco = '?' where cpf = '?'";
 			PreparedStatement stmt = con.prepareStatement(sql);
 			stmt.setString(1, f.getNomeFreelancer());
 			stmt.setString(2, f.getEmail());
 			stmt.setInt(3, f.getCEP());
 			stmt.setString(4, f.getEndereco());
-			stmt.setString(5, Integer.toString(f.getCpf()));
-			stmt.executeQuery();
-			con.close();
+			stmt.setString(5, f.getCpf());
+			stmt.executeQuery();*/
+			
+			Statement stmt = con.createStatement();
+			String query = "UPDATE freelancer SET nome = '"+ f.getNomeFreelancer()+"', email = '"+f.getEmail()+"', cep = "+f.getCEP()+", endereco = '"+ f.getEndereco()+"' where cpf = '"+f.getCpf()+"';";
+			stmt.executeUpdate(query);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -53,11 +56,13 @@ public class FreelancerDAOImpl implements FreelancerDAO {
 	public boolean validarFreelancerCpf(String cpf) {
 		try {
 			con = DriverManager.getConnection(url, user, pass);
-			String sql = "SELECT nome FROM freelancer WHERE cpf = '?'";
-			PreparedStatement stmt = con.prepareStatement(sql);
-			stmt.setString(1, cpf);
-			ResultSet rs = stmt.executeQuery();
-			con.close();
+		//	String sql = "SELECT nome FROM freelancer WHERE cpf = '?'";
+		//	PreparedStatement stmt = con.prepareStatement(sql);
+		//	stmt.setString(1, cpf); 
+			//ResultSet rs = stmt.executeQuery();
+			Statement stmt = con.createStatement();
+			String query = "SELECT * FROM freelancer where cpf = '"+cpf+"';";
+			ResultSet rs = stmt.executeQuery(query);
 			if (rs.next()) {
 				return true;
 			}
@@ -65,7 +70,6 @@ public class FreelancerDAOImpl implements FreelancerDAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 		return false;
 	}
 
@@ -73,11 +77,17 @@ public class FreelancerDAOImpl implements FreelancerDAO {
 	public String buscarEmailCpf(String cpf) {
 		try {
 			con = DriverManager.getConnection(url, user, pass);
-			String sql = "SELECT email FROM freelancer WHERE cpf = '?'";
+			/*String sql = "SELECT email FROM freelancer WHERE cpf = '?'";
 			PreparedStatement stmt = con.prepareStatement(sql);
 			stmt.setString(1, cpf);
 			ResultSet rs = stmt.executeQuery();
-			con.close();
+			con.close();*/
+			Statement stmt = con.createStatement();
+			String query = "SELECT email FROM freelancer where cpf = '"+cpf+"';";
+			ResultSet rs = stmt.executeQuery(query);
+			if (rs.next()) {
+				return rs.getString("email");
+			}
 			return rs.getString(0);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -90,11 +100,17 @@ public class FreelancerDAOImpl implements FreelancerDAO {
 	public String buscarEnderecoCpf(String cpf) {
 		try {
 			con = DriverManager.getConnection(url, user, pass);
-			String sql = "SELECT endereco FROM freelancer WHERE cpf = '?'";
+			/*String sql = "SELECT endereco FROM freelancer WHERE cpf = '?'";
 			PreparedStatement stmt = con.prepareStatement(sql);
 			stmt.setString(1, cpf);
 			ResultSet rs = stmt.executeQuery();
-			con.close();
+			con.close();*/
+			Statement stmt = con.createStatement();
+			String query = "SELECT endereco FROM freelancer where cpf = '"+cpf+"';";
+			ResultSet rs = stmt.executeQuery(query);
+			if (rs.next()) {
+				return rs.getString("endereco");
+			}
 			return rs.getString(0);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -107,12 +123,20 @@ public class FreelancerDAOImpl implements FreelancerDAO {
 	public int buscarCepCpf(String cpf) {
 		try {
 			con = DriverManager.getConnection(url, user, pass);
+			/*
 			String sql = "SELECT cep FROM freelancer WHERE cpf = '?'";
 			PreparedStatement stmt = con.prepareStatement(sql);
 			stmt.setString(1, cpf);
 			ResultSet rs = stmt.executeQuery();
 			con.close();
-			return Integer.parseInt(rs.getString(0));
+			*/
+			Statement stmt = con.createStatement();
+			String query = "SELECT cep FROM freelancer where cpf = '"+cpf+"';";
+			ResultSet rs = stmt.executeQuery(query);
+			if (rs.next()) {
+				return rs.getInt("cep");
+			}
+			return rs.getInt("cep");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -124,12 +148,17 @@ public class FreelancerDAOImpl implements FreelancerDAO {
 	public String buscarNomeCpf(String cpf) {
 		try {
 			con = DriverManager.getConnection(url, user, pass);
-			String sql = "SELECT nome FROM freelancer WHERE cpf = '?'";
+			/*String sql = "SELECT nome FROM freelancer WHERE cpf = '?'";
 			PreparedStatement stmt = con.prepareStatement(sql);
 			stmt.setString(1, cpf);
 			ResultSet rs = stmt.executeQuery();
-			con.close();
-			return rs.getString(0);
+			con.close();*/
+			Statement stmt = con.createStatement();
+			String query = "SELECT nome FROM freelancer where cpf = '"+cpf+"';";
+			ResultSet rs = stmt.executeQuery(query);
+			if (rs.next()) {
+				return rs.getString("nome");
+			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -153,29 +182,6 @@ public class FreelancerDAOImpl implements FreelancerDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
-	}
-
-	@Override
-	public List<Freelancer> ler(Freelancer j) {
-		Freelancer f = new Freelancer();
-		Especialidade e = new Especialidade();
-		List<Freelancer> cadastros = new ArrayList<>();
-		try {
-			Connection con = DriverManager.getConnection(url, user, pass);
-			Statement stmt = con.createStatement();
-			String query = "SELECT * FROM especialidade;";
-			ResultSet rs = stmt.executeQuery(query);
-			while (rs.next()) {
-				e.setEspecialidade(rs.getString("nome_especialidade"));
-				e.setTempExp(rs.getString("temp_exp"));
-				cadastros.add(f);
-			}
-			con.close();
-		} catch (SQLException d) {
-			d.printStackTrace();
-		}
-		return cadastros;
 
 	}
 
@@ -233,22 +239,50 @@ public class FreelancerDAOImpl implements FreelancerDAO {
 	}
 
 	@Override
-	public boolean updateuser(int id) {
+	public boolean updateuser(Login l) {
 		try {
 			Connection con = DriverManager.getConnection(url, user, pass);
 			Statement stmt = con.createStatement();
-			Login l = new Login();
 			String query = "select * from freelancer where fk_login = " + l.getId() + ";";
+			System.out.println(l.getId());
 			ResultSet rs = stmt.executeQuery(query);
+			
 			if (rs.next()) {
 				return true;
-			} else {
+			}else {
 				return false;
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return false;
+	}
+	
+	@Override
+	public Freelancer update(Login l) {
+		try {
+			Connection con = DriverManager.getConnection(url, user, pass);
+			Statement stmt = con.createStatement();
+			String query = "select * from freelancer where fk_login = " + l.getId() + ";";
+			System.out.println(l.getId());
+			ResultSet rs = stmt.executeQuery(query);
+			if (rs.next()) {
+				Freelancer f = new Freelancer();
+				f.setNomeFreelancer(rs.getString("nome"));
+				f.setBairro("bairro");
+				f.setCEP(Integer.parseInt("cep"));
+				f.setCidade("cidade");
+				f.setEmail("email");
+				f.setEndereco("endereco");
+				f.setUf("if");
+				return f;
+			} else {
+				return null;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 }

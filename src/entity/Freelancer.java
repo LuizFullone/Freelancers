@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class Freelancer {
 	private String nomeFreelancer;
-	private int Cpf;
+	private String Cpf;
 	private int telefone;
 	private String email;
 	private Date dataNasc;
@@ -38,10 +38,10 @@ public class Freelancer {
 	public void setNomeFreelancer(String nomeFreelancer) {
 		this.nomeFreelancer = nomeFreelancer;
 	}
-	public int getCpf() {
+	public String getCpf() {
 		return Cpf;
 	}
-	public void setCpf(int cpf) {
+	public void setCpf(String cpf) {
 		Cpf = cpf;
 	}
 	public int getTelefone() {
