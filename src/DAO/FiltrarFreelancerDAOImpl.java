@@ -36,21 +36,10 @@ public class FiltrarFreelancerDAOImpl implements FiltrarFreelancerDAO {
 			Connection con = DriverManager.getConnection(url, user, pass);
 			
 			query = "SELECT f.nome, e.nome_especialidade, e.temp_exp FROM freelancer AS f\r\n" + 
-					"INNER JOIN especialidade AS e ON e.fk_freelancer = f.fk_especialidade\r\n" + 
+					"INNER JOIN especialidade AS e ON e.fk_freelancer = f.fk_login\r\n" + 
 					"where f.nome like '%"+f.getNome()+"%' && e.nome_especialidade like '%"
 							+ ""+f.getEspecialidade()+"%' && e.temp_exp like '%"+f.getTemp_exp()+"%'";
-			
 			Statement stmt = con.createStatement();
-			
-			/*
-			query = "SELECT f.nome, e.nome_especialidade, e.temp_exp FROM freelancer AS f\r\n" + 
-					"INNER JOIN especialidade AS e ON e.fk_freelancer = f.fk_especialidade\r\n" + 
-					"where f.nome like ?";
-			
-			PreparedStatement stmt = con.prepareStatement(query);
-			
-			stmt.setString(1, "%"+f.getNome()+"%");
-			*/
 			
 			ResultSet rs = stmt.executeQuery(query);
 			

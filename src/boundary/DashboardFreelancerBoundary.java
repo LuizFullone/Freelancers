@@ -20,14 +20,17 @@ import control.LoginControll;
 import entity.Login;
 
 public class DashboardFreelancerBoundary implements ActionListener {
+	
+	private Login l = new Login();
 
 	private JFrame frame;
 
-	public void main() {
+	public void main(Login l) {
+		this.l = l;
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					DashboardFreelancerBoundary window = new DashboardFreelancerBoundary();
+					DashboardFreelancerBoundary window = new DashboardFreelancerBoundary(l);
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -36,7 +39,7 @@ public class DashboardFreelancerBoundary implements ActionListener {
 		});
 	}
 
-	public DashboardFreelancerBoundary() {
+	public DashboardFreelancerBoundary(Login l) {
 
 		frame = new JFrame("Dashboard");
 		frame.getContentPane().setBackground(new Color(255, 255, 255));
@@ -111,8 +114,8 @@ public class DashboardFreelancerBoundary implements ActionListener {
 			solicitacao.main();
 			frame.setVisible(false);
 		} else if ("Alterar Perfil".equals(e.getActionCommand())) {
-			AlterarFreelancer alterar = new AlterarFreelancer();
-			alterar.main();
+			AlterarFreelancer alterar = new AlterarFreelancer(l);
+			alterar.main(l);
 			frame.setVisible(false);
 		} else if ("Visualizar Vagas".equals(e.getActionCommand())) {
 			System.out.println("teste");

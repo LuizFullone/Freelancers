@@ -12,6 +12,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 import control.LoginControll;
+import entity.Login;
 
 public class LoginBoundary implements ActionListener {
 
@@ -89,8 +90,12 @@ public class LoginBoundary implements ActionListener {
 			if (l.updateUser(txtUser.getText(), txtSenha.getText())!=0) {
 				String tipoUser = l.identificaUser(txtUser.getText());
 				if ("freelancer".equals(tipoUser)) {
-					DashboardFreelancerBoundary dash = new DashboardFreelancerBoundary();
-					dash.main();
+					Login login = new Login();
+					login.setUser(txtUser.getText());
+					login.setSenha(txtSenha.getText());
+					login.setId(l.updateUser(login.getUser(), login.getSenha()));
+					DashboardFreelancerBoundary dash = new DashboardFreelancerBoundary(login);
+					dash.main(login);
 					frame.setVisible(false);
 				} else if ("empresa".equals(tipoUser)){
 					DashboardEmpresaBoundary dash = new DashboardEmpresaBoundary();

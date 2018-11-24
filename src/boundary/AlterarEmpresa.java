@@ -33,10 +33,6 @@ public class AlterarEmpresa implements ActionListener{
 	private JComboBox cmbUf;
 	private JTextField txtCidade;
 	private JTextField txtBairro;
-	private JLabel lblEndereo;
-	private JLabel label_1;
-	private JLabel lblNome_1;
-	private JLabel label_2;
 	private JTextField txtInscricaoEst;
 	private JTextField txtRazaoSocial;
 
@@ -56,16 +52,9 @@ public class AlterarEmpresa implements ActionListener{
 		});
 	}
 
-	/**
-	 * Create the application.
-	 */
 	public AlterarEmpresa() {
 		initialize();
 	}
-
-	/**
-	 * Initialize the contents of the frame.
-	 */
 	private void initialize() {
 		frame = new JFrame("Cadastro de Empresa");
 		frame.getContentPane().setBackground(new Color(255, 255, 255));
@@ -254,11 +243,11 @@ public class AlterarEmpresa implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if ("Cadastrar-se".equals(e.getActionCommand())) { 
-			DashboardFreelancerBoundary dash = new DashboardFreelancerBoundary();
+			DashboardEmpresaBoundary dash = new DashboardEmpresaBoundary();
 			dash.main();
 			frame.setVisible(false);
 		} else if ("Cancelar".equals(e.getActionCommand())) {
-			CadastroLoginBoundary login = new CadastroLoginBoundary();
+			DashboardEmpresaBoundary login = new DashboardEmpresaBoundary();
 			login.main();
 			frame.setVisible(false);
 		}
