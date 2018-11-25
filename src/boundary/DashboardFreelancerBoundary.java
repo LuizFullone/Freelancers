@@ -14,13 +14,17 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.awt.event.ActionEvent;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.border.LineBorder;
 
+import control.FreelancerControl;
 import control.LoginControll;
 import entity.Login;
 
 public class DashboardFreelancerBoundary implements ActionListener {
-	
+	private FreelancerControl control = new FreelancerControl();
+	private JTable tabela = new JTable(control);
 	private Login l = new Login();
 
 	private JFrame frame;
@@ -40,6 +44,9 @@ public class DashboardFreelancerBoundary implements ActionListener {
 	}
 
 	public DashboardFreelancerBoundary(Login l) {
+		
+		JScrollPane panTabela = new JScrollPane();
+		panTabela.setViewportView(tabela);
 
 		frame = new JFrame("Dashboard");
 		frame.getContentPane().setBackground(new Color(255, 255, 255));
@@ -100,6 +107,9 @@ public class DashboardFreelancerBoundary implements ActionListener {
 		lblNotificaes.setFont(new Font("Arial Black", Font.PLAIN, 16));
 		lblNotificaes.setBounds(305, 86, 193, 44);
 		frame.getContentPane().add(lblNotificaes);
+		
+		panTabela.setBounds(235, 141, 432, 402);
+		frame.getContentPane().add(panTabela);
 	}
 
 	@Override
