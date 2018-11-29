@@ -18,12 +18,13 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.border.LineBorder;
 
+import control.DashEmpresaControl;
 import control.FreelancerControl;
 import control.LoginControll;
 import entity.Login;
 
 public class DashboardEmpresaBoundary implements ActionListener{
-	private FreelancerControl control = new FreelancerControl();
+	private DashEmpresaControl control = new DashEmpresaControl();
 	private JFrame frame;
 	private JTable tabela = new JTable(control);
 	public void main() {

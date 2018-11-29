@@ -1,9 +1,9 @@
 package control;
 
 public class conexao {
-	static String url = "jdbc:mysql://localhost:3306/freelancers?useTimezone=true&serverTimezone=UTC";
-	static String user = "root";
-	static String pass = "";
+	static String url = "jdbc:mysql://localhost:3306/freela?useTimezone=true&serverTimezone=UTC";
+	static String user = "JJR";
+	static String pass = "2043";
 	
 	public conexao() {
 		try {
